@@ -317,59 +317,31 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - iOS requires additional setup for secure storage
 - Large files (>100MB) may cause performance issues
 
-## 📥 Download
+## 📥 Download & Installation
 
-### Current Status: APK Build Issue
+### 🎯 **Easiest Way: Direct Installation (Recommended)**
 
-**Important Notice**: We're currently experiencing a known Flutter/Dart SDK compatibility issue when building Android APK files. The `web` package (required by `flutter_secure_storage_web`) has type incompatibilities with Dart 3.11.1.
+**You don't need an APK file!** Install directly on your phone in 3 simple steps:
 
-**The app works perfectly in:**
-- ✅ Debug mode: `flutter run` (Android device/emulator)
-- ✅ Web mode: `flutter run -d chrome`
-- ✅ iOS mode: `flutter run -d ios` (with proper setup)
+1. **Install Flutter** on your computer ([Download here](https://docs.flutter.dev/get-started/install))
+2. **Enable USB Debugging** on your Android phone
+3. **Run this command** with phone connected:
+   ```bash
+   cd secure_pii_wallet
+   flutter run --release
+   ```
 
-**Workarounds for Android Installation:**
+**✅ The app will be permanently installed on your phone!**
 
-#### Option 1: Build from Source (Recommended)
-```bash
-# Clone the repository
-git clone https://github.com/kathirvel-p22/Secure-PII_Wallet.git
-cd Secure-PII_Wallet/secure_pii_wallet
+📖 **[Complete Installation Guide →](INSTALL_ON_PHONE.md)**
 
-# Install dependencies
-flutter pub get
+---
 
-# Connect your Android device via USB (enable USB debugging)
-# OR start an Android emulator
+### ⚠️ APK Build Status
 
-# Run directly on device (works perfectly)
-flutter run
-```
+We're currently experiencing a Flutter/Dart SDK compatibility issue when building APK files. The `web` package has type incompatibilities with Dart 3.11.1.
 
-#### Option 2: Wait for Fix
-We're actively working on resolving this issue. Solutions being explored:
-- Downgrading to compatible Flutter/Dart SDK versions
-- Replacing `flutter_secure_storage` with alternative secure storage
-- Creating platform-specific builds without web dependencies
-
-#### Option 3: Use Web Version
-```bash
-# Run the web version (fully functional)
-flutter run -d chrome
-```
-
-### Technical Details
-
-**Error**: The `web` package versions (both 0.5.1 and 1.1.1) have type definition issues (`JSObject`, `JSAny`, `JSArray` types not recognized) when compiling for Android with Dart SDK 3.11.1.
-
-**Root Cause**: `flutter_secure_storage` pulls in `flutter_secure_storage_web` as a transitive dependency, which requires the `web` package. This creates a conflict when building for Android.
-
-**Attempted Solutions**:
-- ✗ Dependency override with `web: 0.5.1`
-- ✗ Removing Syncfusion PDF viewer
-- ✗ Building debug APK instead of release
-
-**Next Steps**: We'll update this README once a working APK is available.
+**However, the app works perfectly when installed using `flutter run`!**
 
 ## 🗺️ Roadmap
 
