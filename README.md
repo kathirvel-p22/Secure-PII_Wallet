@@ -310,9 +310,33 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🐛 Known Issues
 
-- Web build requires internet for CanvasKit (use HTML renderer as fallback)
+- **APK Build Issue**: Currently experiencing compilation errors with the `web` package dependency (version 1.1.1) when building Android APK. This is a known Flutter issue with web dependencies in Android builds. 
+  - **Workaround**: The app runs perfectly in debug mode (`flutter run`)
+  - **Fix in progress**: Working on dependency resolution
+  - **Web version**: Works perfectly with `flutter run -d chrome`
 - iOS requires additional setup for secure storage
 - Large files (>100MB) may cause performance issues
+
+## 📥 Download
+
+### APK Download
+**Note**: APK build is currently experiencing dependency issues. Please build from source using debug mode for now.
+
+### Build from Source
+```bash
+# Clone the repository
+git clone https://github.com/kathirvel-p22/Secure-PII_Wallet.git
+cd Secure-PII_Wallet/secure_pii_wallet
+
+# Install dependencies
+flutter pub get
+
+# Run in debug mode (works perfectly)
+flutter run
+
+# For web
+flutter run -d chrome
+```
 
 ## 🗺️ Roadmap
 
