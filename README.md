@@ -2,14 +2,13 @@
 
 A military-grade encrypted personal information wallet built with Flutter. Protect your sensitive documents with dual-layer security, AES-256 encryption, and Shamir's Secret Sharing.
 
-![Flutter](https://img.shields.io/badge/Flutter-3.0+-blue.svg)
-![Dart](https://img.shields.io/badge/Dart-3.0+-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-lightgrey.svg)
+[![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-blue.svg)](https://flutter.dev)
 
 ## 📱 Screenshots
 
-> Add screenshots here after building the app
+[Screenshots will be added here]
 
 ## ✨ Features
 
@@ -17,11 +16,12 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 - **Master Password**: Strong password (10+ characters) for critical operations
   - Uppercase, lowercase, numbers, and special characters required
   - Password strength indicator
-  - Real-time validation
+  - Used for factory reset and system reset
+  
 - **PIN Lock**: Quick 4 or 6-digit PIN for app unlock
+  - Fast daily access
   - Failed attempt tracking
-  - Temporary lock after 5 failed attempts
-  - Secure storage with SHA-256 hashing
+  - Auto-lock after 5 failed attempts
 
 ### 🔒 Military-Grade Encryption
 - **AES-256-CBC** encryption for all files
@@ -29,7 +29,7 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 - **SHA-256** hashing for credentials
 - Zero-knowledge architecture
 
-### 🔑 Shamir's Secret Sharing (SSS)
+### 🎯 Shamir's Secret Sharing (SSS)
 - Mathematical security over Galois Field GF(256)
 - Configurable shares (3-10 total shares)
 - Flexible threshold (2 to total shares required)
@@ -43,30 +43,26 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 - Download with password protection
 - File metadata tracking
 
-### 🎨 Modern UI
-- Cybersecurity-themed design
-- Dark/Light mode support
-- Responsive layout
-- Smooth animations
-- Bottom navigation
-
 ### ⚙️ Advanced Settings
-- Auto-lock timer (1-30 minutes)
-- Theme customization
-- Backup & restore vault
-- Export encrypted vault
-- Import from backup
+- **Theme**: Dark/Light mode toggle
+- **Auto-Lock**: Configurable timer (1-30 minutes)
+- **Backup/Export**: Encrypted vault export
+- **Import**: Restore from backup
+- **Factory Reset**: Clear files (keeps credentials)
+- **Lock & Reset**: Complete system reset (deletes everything)
 
-### 🔄 Reset Options
-1. **Factory Reset**: Delete all files (keeps PIN & master password)
-2. **Lock & Reset**: Complete system reset (deletes everything, restarts from onboarding)
+### 🔍 Security Features
+- PII detection and warnings
+- Access logs tracking
+- Security score assessment
+- Session management
+- Failed attempt monitoring
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
-- Flutter SDK (3.0 or higher)
-- Dart SDK (3.0 or higher)
+- Flutter SDK 3.0 or higher
+- Dart SDK 3.0 or higher
 - Android Studio / VS Code
 - Git
 
@@ -84,39 +80,28 @@ flutter pub get
 ```
 
 3. **Run the app**
-
-For Android:
 ```bash
+# For Android
 flutter run
-```
 
-For Web:
-```bash
+# For Web
 flutter run -d chrome
-```
 
-For iOS:
-```bash
+# For iOS
 flutter run -d ios
 ```
 
 ### Building APK
 
-**Note**: There's currently a known issue with the `web` package dependency. To build the APK, you may need to:
-
-1. Update Flutter to the latest version:
 ```bash
-flutter upgrade
-```
-
-2. Clean and rebuild:
-```bash
-flutter clean
-flutter pub get
+# Build release APK
 flutter build apk --release
-```
 
-The APK will be available at: `build/app/outputs/flutter-apk/app-release.apk`
+# Build split APKs per ABI
+flutter build apk --split-per-abi
+
+# APK location: build/app/outputs/flutter-apk/app-release.apk
+```
 
 ## 📖 User Guide
 
@@ -124,170 +109,137 @@ The APK will be available at: `build/app/outputs/flutter-apk/app-release.apk`
 
 1. **Onboarding**: Learn about app features through 6 informative slides
 2. **Master Password Setup**: Create a strong password for critical operations
-3. **PIN Setup**: Choose a 4 or 6-digit PIN for quick app unlock
-4. **Dashboard**: Start using the app
+3. **PIN Setup**: Choose a 4 or 6-digit PIN for quick access
+4. **Dashboard**: Start securing your files!
 
 ### Uploading Files
 
 1. Navigate to **Dashboard**
-2. Tap the **Upload** button
+2. Tap **Upload File** button
 3. Choose security mode:
    - **Standard**: Password-based encryption
    - **High Security**: Shamir's Secret Sharing
 4. For High Security:
    - Configure total shares (3-10)
    - Set threshold (2 to total)
-5. Select file and upload
+   - Save shares securely in different locations
+5. Upload your file
 
-### Unlocking Files
+### Accessing Files
 
 **Standard Security:**
-- Enter the password used during upload
+- Enter the file password
+- View or download the file
 
 **High Security:**
 - Enter the required number of shares (threshold)
 - Shares can be entered in any order
 - System reconstructs the key automatically
-
-### Backup & Restore
-
-**Export Vault:**
-1. Go to **Settings** → **Storage** → **Export Vault**
-2. Enter a strong backup password
-3. Download the encrypted backup file
-
-**Import Vault:**
-1. Go to **Settings** → **Storage** → **Import Vault**
-2. Select backup file
-3. Enter backup password
-4. Files will be restored
+- View or download the file
 
 ### Reset Options
 
-**Factory Reset** (Keeps credentials):
-1. Go to **Settings** → **Danger Zone** → **Factory Reset**
-2. Enter master password
-3. Confirm deletion
-4. All files deleted, PIN and master password remain
+#### Factory Reset
+- Deletes: All files and data
+- Keeps: PIN and master password
+- Use when: You want to clear files but keep credentials
 
-**Lock & Reset** (Complete reset):
-1. Go to **Settings** → **Danger Zone** → **Lock & Reset**
-2. Enter master password
-3. Confirm complete reset
-4. App restarts from onboarding
+#### Lock & Reset (Complete System Reset)
+- Deletes: Everything (files, PIN, master password, settings)
+- Result: App restarts from onboarding
+- Use when: Maximum security cleanup needed
 
 ## 🏗️ Architecture
+
+### 10-Layer Architecture
+
+1. **UI Layer**: Flutter widgets and screens
+2. **Navigation Layer**: GoRouter for routing
+3. **State Management**: Riverpod for reactive state
+4. **Controllers**: Business logic handlers
+5. **Security Engine**: Core security operations
+6. **Cryptography Layer**: AES-256, SSS, hashing
+7. **Storage Layer**: Encrypted file storage
+8. **Key Management**: Secure key handling
+9. **Data Models**: Type-safe data structures
+10. **Defense Layer**: Security validations
 
 ### Project Structure
 
 ```
 lib/
 ├── core/
-│   ├── crypto/              # Encryption & cryptography
-│   │   ├── crypto_service.dart
-│   │   ├── galois_field.dart
-│   │   └── shamir_secret_sharing.dart
-│   ├── keys/                # Key management
-│   ├── security/            # Security engine
-│   ├── storage/             # Storage services
-│   ├── theme/               # App theming
-│   └── utils/               # Utilities
+│   ├── crypto/           # Encryption, SSS, Galois Field
+│   ├── keys/             # Key management
+│   ├── security/         # Security engine
+│   ├── storage/          # Storage services
+│   ├── theme/            # App theming
+│   └── utils/            # Utilities
 ├── features/
-│   ├── auth/                # Authentication
-│   │   ├── services/
-│   │   ├── views/
-│   │   └── widgets/
-│   ├── files/               # File management
-│   ├── onboarding/          # Onboarding flow
-│   ├── pin/                 # PIN management
-│   ├── settings/            # App settings
-│   ├── security/            # Security dashboard
-│   ├── backup/              # Backup & restore
-│   └── navigation/          # Navigation
-├── providers/               # Riverpod providers
-├── routing/                 # App routing
-└── main.dart               # Entry point
+│   ├── auth/             # Authentication (Master Password, PIN)
+│   ├── backup/           # Backup/restore services
+│   ├── files/            # File management
+│   ├── logs/             # Access logs
+│   ├── navigation/       # Bottom navigation
+│   ├── onboarding/       # Onboarding flow
+│   ├── security/         # Security dashboard
+│   └── settings/         # App settings
+├── providers/            # Riverpod providers
+├── routing/              # App routing
+└── main.dart             # Entry point
 ```
-
-### Key Technologies
-
-- **State Management**: Riverpod
-- **Routing**: GoRouter
-- **Storage**: FlutterSecureStorage, localStorage (web)
-- **Encryption**: crypto package
-- **File Handling**: file_picker
-- **UI**: Material Design 3
 
 ## 🔐 Security Details
 
-### Encryption Algorithms
+### Encryption Specifications
+- **Algorithm**: AES-256-CBC
+- **Key Size**: 256 bits
+- **Block Size**: 128 bits
+- **Mode**: Cipher Block Chaining (CBC)
+- **Padding**: PKCS7
 
-- **Symmetric Encryption**: AES-256-CBC
-- **Key Derivation**: PBKDF2 with 10,000 iterations
-- **Hashing**: SHA-256
-- **Secret Sharing**: Shamir's Secret Sharing over GF(256)
+### Shamir's Secret Sharing
+- **Field**: Galois Field GF(256)
+- **Polynomial**: Lagrange interpolation
+- **Shares**: 3-10 configurable
+- **Threshold**: 2 to total shares
+- **Security**: Information-theoretic security
 
-### Security Best Practices
+### Key Derivation
+- **Function**: PBKDF2
+- **Hash**: SHA-256
+- **Iterations**: 10,000+
+- **Salt**: Unique per encryption
 
-1. **Master Password**:
-   - Minimum 10 characters
-   - Mix of uppercase, lowercase, numbers, special characters
-   - Store safely (use password manager)
-   - Cannot be recovered if forgotten
+### Credential Storage
+- **Platform**: FlutterSecureStorage (mobile), localStorage (web)
+- **Hashing**: SHA-256 with salt
+- **Protection**: OS-level encryption
 
-2. **PIN**:
-   - Avoid obvious patterns (1234, 0000)
-   - Change regularly
-   - Don't share with others
+## 🛠️ Technologies Used
 
-3. **High Security Files**:
-   - Use SSS for sensitive documents
-   - Store shares in different locations
-   - Keep threshold reasonable
+- **Framework**: Flutter 3.0+
+- **Language**: Dart 3.0+
+- **State Management**: Riverpod
+- **Routing**: GoRouter
+- **Encryption**: crypto package
+- **Storage**: flutter_secure_storage
+- **File Picking**: file_picker
+- **UI**: Material Design 3
 
-4. **Backups**:
-   - Export vault regularly
-   - Use strong backup passwords
-   - Store backups securely
+## 📦 Dependencies
 
-### Data Storage
-
-- **Mobile**: FlutterSecureStorage (encrypted keychain/keystore)
-- **Web**: Browser localStorage (encrypted)
-- **Zero-knowledge**: No data sent to external servers
-- **Local-only**: All data stays on your device
-
-## 🛠️ Development
-
-### Running Tests
-
-```bash
-flutter test
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.4.0
+  go_router: ^12.0.0
+  crypto: ^3.0.3
+  flutter_secure_storage: ^9.0.0
+  file_picker: ^6.0.0
+  path_provider: ^2.1.0
 ```
-
-### Code Generation
-
-```bash
-flutter pub run build_runner build
-```
-
-### Linting
-
-```bash
-flutter analyze
-```
-
-### Format Code
-
-```bash
-flutter format .
-```
-
-## 📝 Known Issues
-
-1. **Web Package Compilation**: There's a known issue with the `web` package when building APK. Update Flutter to the latest version to resolve.
-
-2. **CanvasKit CDN**: When running on web, you may encounter CanvasKit fetch errors. This is a network issue with Google's CDN.
 
 ## 🤝 Contributing
 
@@ -299,56 +251,113 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔒 Security Best Practices
+
+### For Users
+
+1. **Master Password**
+   - Use a unique, strong password
+   - Store it in a password manager
+   - Never share it with anyone
+   - Cannot be recovered if forgotten
+
+2. **PIN**
+   - Avoid obvious patterns (1234, 0000)
+   - Change regularly
+   - Don't reuse from other apps
+
+3. **Backups**
+   - Export vault regularly
+   - Store backups securely offline
+   - Use strong backup passwords
+   - Test restore process
+
+4. **High Security Files**
+   - Use SSS for sensitive documents
+   - Store shares in different physical locations
+   - Keep threshold reasonable (not too low)
+   - Document share locations securely
+
+5. **General**
+   - Keep app updated
+   - Use auto-lock feature
+   - Review access logs regularly
+   - Perform factory reset before device transfer
+
+### For Developers
+
+1. **Code Security**
+   - Never log sensitive data
+   - Use secure random generators
+   - Validate all inputs
+   - Follow OWASP guidelines
+
+2. **Cryptography**
+   - Use established libraries
+   - Never implement custom crypto
+   - Keep dependencies updated
+   - Use proper key sizes
+
+3. **Storage**
+   - Encrypt all sensitive data
+   - Use platform secure storage
+   - Clear sensitive data from memory
+   - Implement secure deletion
+
+## 🐛 Known Issues
+
+- Web build requires internet for CanvasKit (use HTML renderer as fallback)
+- iOS requires additional setup for secure storage
+- Large files (>100MB) may cause performance issues
+
+## 🗺️ Roadmap
+
+- [ ] Biometric authentication (fingerprint, face ID)
+- [ ] Cloud backup with end-to-end encryption
+- [ ] File sharing with encrypted links
+- [ ] Multi-language support
+- [ ] Desktop support (Windows, macOS, Linux)
+- [ ] Hardware security key support
+- [ ] Audit logging export
+- [ ] Custom encryption algorithms selection
+
+## 📞 Support
+
+For issues, questions, or suggestions:
+- **GitHub Issues**: [Create an issue](https://github.com/kathirvel-p22/Secure-PII_Wallet/issues)
+- **Email**: [Your Email]
+- **Documentation**: [Wiki](https://github.com/kathirvel-p22/Secure-PII_Wallet/wiki)
 
 ## 👨‍💻 Author
 
 **Kathirvel P**
 - GitHub: [@kathirvel-p22](https://github.com/kathirvel-p22)
+- LinkedIn: [Your LinkedIn]
 
 ## 🙏 Acknowledgments
 
 - Flutter team for the amazing framework
 - Riverpod for state management
-- crypto package for encryption utilities
-- All contributors and testers
+- Crypto community for security best practices
+- Open source contributors
 
-## 📞 Support
+## ⚠️ Disclaimer
 
-For issues, questions, or suggestions:
-- Open an issue on [GitHub](https://github.com/kathirvel-p22/Secure-PII_Wallet/issues)
-- Email: [Your Email]
+This application is provided "as is" without warranty of any kind. While we implement industry-standard security practices, no system is 100% secure. Users are responsible for:
+- Keeping their master password and PIN secure
+- Regularly backing up their data
+- Understanding the risks of digital storage
+- Complying with local laws and regulations
 
-## 🔮 Future Enhancements
-
-- [ ] Biometric authentication (fingerprint/face ID)
-- [ ] Cloud backup (encrypted)
-- [ ] Multi-language support
-- [ ] File categories and tags
-- [ ] Search functionality
-- [ ] File preview
-- [ ] Batch operations
-- [ ] Password generator
-- [ ] Security audit logs
-- [ ] Two-factor authentication
-
-## 📊 Version History
-
-### v1.0.0 (Current)
-- Initial release
-- Dual security system (Master Password + PIN)
-- AES-256 encryption
-- Shamir's Secret Sharing
-- File upload/download
-- Backup & restore
-- Factory reset & complete system reset
-- Dark/Light theme
-- Auto-lock timer
+**Important**: This app is designed for personal use. For enterprise or commercial use, please conduct a thorough security audit.
 
 ---
 
-**⚠️ Security Notice**: This app is designed for personal use. While it implements strong encryption, no system is 100% secure. Always follow security best practices and keep your credentials safe.
+**Made with ❤️ and 🔐 by Kathirvel P**
 
-**Made with ❤️ using Flutter**
+**Version**: 1.0.0  
+**Last Updated**: April 27, 2026

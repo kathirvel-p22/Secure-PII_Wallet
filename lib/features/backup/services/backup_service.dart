@@ -34,7 +34,7 @@ class BackupService {
           // Get keys if they exist
           Map<String, dynamic>? keysData;
           if (_storage is WebStorageService) {
-            final webStorage = _storage as WebStorageService;
+            final webStorage = _storage;
             if (await webStorage.hasKeys(meta.id)) {
               keysData = await webStorage.getKeys(meta.id);
             }
@@ -118,7 +118,7 @@ class BackupService {
           
           // Store keys if they exist
           if (keysData != null && _storage is WebStorageService) {
-            final webStorage = _storage as WebStorageService;
+            final webStorage = _storage;
             await webStorage.storeKeys(meta.id, keysData);
           }
           
@@ -152,7 +152,7 @@ class BackupService {
           
           // Delete keys if they exist
           if (_storage is WebStorageService) {
-            final webStorage = _storage as WebStorageService;
+            final webStorage = _storage;
             if (await webStorage.hasKeys(meta.id)) {
               await webStorage.deleteKeys(meta.id);
             }
@@ -168,7 +168,7 @@ class BackupService {
       
       // Clear any remaining data
       if (_storage is WebStorageService) {
-        final webStorage = _storage as WebStorageService;
+        final webStorage = _storage;
         await webStorage.clearAll();
       }
       

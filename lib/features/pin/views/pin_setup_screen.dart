@@ -186,7 +186,7 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
 
               // PIN input
               PinInput(
-                key: ValueKey('${_selectedLength}_${_isConfirming}'),
+                key: ValueKey('${_selectedLength}_$_isConfirming'),
                 length: _selectedLength,
                 onCompleted: _onPinCompleted,
                 enabled: !_isLoading,

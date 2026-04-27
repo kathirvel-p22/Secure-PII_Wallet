@@ -5,7 +5,6 @@ import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
 import '../../../providers/providers.dart';
 import '../widgets/pin_input.dart';
-import '../services/pin_service.dart';
 
 class PinUnlockScreen extends ConsumerStatefulWidget {
   const PinUnlockScreen({super.key});

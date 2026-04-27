@@ -116,7 +116,7 @@ class PinService {
 
   /// Hash PIN for secure storage
   String _hashPin(String pin) {
-    final bytes = utf8.encode(pin + 'secure_pii_salt');
+    final bytes = utf8.encode('${pin}secure_pii_salt');
     final digest = sha256.convert(bytes);
     return digest.toString();
   }
