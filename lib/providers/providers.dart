@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../core/crypto/crypto_service.dart';
@@ -12,11 +12,12 @@ import '../features/files/models/session_state.dart';
 import '../features/pin/services/pin_service.dart';
 import '../features/auth/services/master_password_service.dart';
 
-// Core service providers
-final secureStorageProvider = Provider<FlutterSecureStorage>((ref) {
-  return const FlutterSecureStorage();
+// Shared Preferences provider
+final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
+  throw UnimplementedError('SharedPreferences must be initialized in main()');
 });
 
+// Core service providers
 final cryptoProvider = Provider<CryptoService>((ref) {
   return CryptoService();
 });
@@ -31,8 +32,8 @@ final storageProvider = Provider<dynamic>((ref) {
 });
 
 final keyProvider = Provider<KeyService>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return KeyService(secureStorage);
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return KeyService(prefs);
 });
 
 final securityProvider = Provider<SecurityEngine>((ref) {
@@ -148,12 +149,12 @@ final autoLockTimerProvider = StateProvider<int>((ref) => 2); // Default 2 minut
 
 // PIN service provider
 final pinServiceProvider = Provider<PinService>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return PinService(secureStorage);
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return PinService(prefs);
 });
 
 // Master password service provider
 final masterPasswordServiceProvider = Provider<MasterPasswordService>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
-  return MasterPasswordService(secureStorage);
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return MasterPasswordService(prefs);
 });

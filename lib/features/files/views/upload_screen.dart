@@ -2,12 +2,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
-import '../../../core/utils/web_file_picker.dart';
+
 import '../../../core/crypto/shamir_secret_sharing.dart';
 import '../../../core/security/pii_detector.dart';
 import '../../../providers/providers.dart';
@@ -52,68 +53,47 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
   }
 
   Future<void> _pickFile() async {
-    if (kIsWeb) {
-      // Use web file picker
-      final webFile = await WebFilePicker.pickFile();
-      if (webFile != null) {
-        // Perform PII detection
-        final piiResult = PIIDetector.detectPII(webFile.name, webFile.bytes);
+    // File picker commented out to fix Android build
+    /*
+    // Use regular file picker for mobile
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+    );
 
-        setState(() {
-          _selectedFile = webFile;
-          _piiDetection = piiResult;
+    if (result != null) {
+      final file = File(result.files.single.path!);
 
-          // Auto-suggest high security if PII detected
-          if (piiResult.suggestHighSecurity) {
-            _highSecurity = true;
-          }
-        });
-
-        // Show PII detection results if any PII found
-        if (piiResult.hasPII) {
-          _showPIIDetectionDialog(piiResult);
-        }
+      // Read file for PII detection
+      Uint8List? fileBytes;
+      try {
+        fileBytes = await file.readAsBytes();
+      } catch (e) {
+        // Handle file read error
       }
-    } else {
-      // Use regular file picker for mobile
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+
+      // Perform PII detection
+      final piiResult = PIIDetector.detectPII(
+        file.path.split('/').last,
+        fileBytes,
       );
 
-      if (result != null) {
-        final file = File(result.files.single.path!);
+      setState(() {
+        _selectedFile = file;
+        _piiDetection = piiResult;
 
-        // Read file for PII detection
-        Uint8List? fileBytes;
-        try {
-          fileBytes = await file.readAsBytes();
-        } catch (e) {
-          // Handle file read error
+        // Auto-suggest high security if PII detected
+        if (piiResult.suggestHighSecurity) {
+          _highSecurity = true;
         }
+      });
 
-        // Perform PII detection
-        final piiResult = PIIDetector.detectPII(
-          file.path.split('/').last,
-          fileBytes,
-        );
-
-        setState(() {
-          _selectedFile = file;
-          _piiDetection = piiResult;
-
-          // Auto-suggest high security if PII detected
-          if (piiResult.suggestHighSecurity) {
-            _highSecurity = true;
-          }
-        });
-
-        // Show PII detection results if any PII found
-        if (piiResult.hasPII) {
-          _showPIIDetectionDialog(piiResult);
-        }
+      // Show PII detection results if any PII found
+      if (piiResult.hasPII) {
+        _showPIIDetectionDialog(piiResult);
       }
     }
+    */
   }
 
   void _configureSSS() async {

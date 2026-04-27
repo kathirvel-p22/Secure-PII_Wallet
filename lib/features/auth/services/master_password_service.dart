@@ -1,20 +1,19 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service for managing the master password (strong password for critical operations)
 class MasterPasswordService {
   static const String _masterPasswordKey = 'master_password_hash';
   static const String _setupCompleteKey = 'master_password_setup_complete';
 
-  final FlutterSecureStorage _storage;
+  final SharedPreferences _prefs;
 
-  MasterPasswordService(this._storage);
+  MasterPasswordService(this._prefs);
 
   /// Check if master password is set up
   Future<bool> isMasterPasswordSetup() async {
-    final setupComplete = await _storage.read(key: _setupCompleteKey);
-    return setupComplete == 'true';
+    return _prefs.getBool(_setupCompleteKey) ?? false;
   }
 
   /// Set up master password
@@ -24,13 +23,13 @@ class MasterPasswordService {
     }
 
     final passwordHash = _hashPassword(password);
-    await _storage.write(key: _masterPasswordKey, value: passwordHash);
-    await _storage.write(key: _setupCompleteKey, value: 'true');
+    await _prefs.setString(_masterPasswordKey, passwordHash);
+    await _prefs.setBool(_setupCompleteKey, true);
   }
 
   /// Verify master password
   Future<bool> verifyMasterPassword(String password) async {
-    final storedHash = await _storage.read(key: _masterPasswordKey);
+    final storedHash = _prefs.getString(_masterPasswordKey);
     if (storedHash == null) return false;
     
     final passwordHash = _hashPassword(password);
@@ -48,8 +47,8 @@ class MasterPasswordService {
 
   /// Reset master password (requires complete app reset)
   Future<void> resetMasterPassword() async {
-    await _storage.delete(key: _masterPasswordKey);
-    await _storage.delete(key: _setupCompleteKey);
+    await _prefs.remove(_masterPasswordKey);
+    await _prefs.remove(_setupCompleteKey);
   }
 
   /// Hash password for secure storage
