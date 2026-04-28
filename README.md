@@ -6,6 +6,10 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-blue.svg)](https://flutter.dev)
 
+## 📱 App Icon
+
+The app features a custom **Secure PII Wallet** logo designed for easy recognition and professional appearance on your device.
+
 ## 📱 Screenshots
 
 [Screenshots will be added here]
