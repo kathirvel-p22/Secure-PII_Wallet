@@ -75,7 +75,7 @@ class SecurityDashboard extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Security Dashboard', style: AppTypography.h2),
+                        const Text('Security Dashboard', style: AppTypography.h2),
                         Text(
                           'Real-time security monitoring',
                           style: AppTypography.metadata.copyWith(
@@ -141,10 +141,10 @@ class SecurityDashboard extends ConsumerWidget {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.error),
         ),
-        child: Row(
+        child: const Row(
           children: [
-            const Icon(Icons.error, color: AppColors.error),
-            const SizedBox(width: 12),
+            Icon(Icons.error, color: AppColors.error),
+            SizedBox(width: 12),
             Text('Security dashboard unavailable', style: AppTypography.body),
           ],
         ),
@@ -165,7 +165,7 @@ class SecurityDashboard extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Security Score', style: AppTypography.labelCaps),
+              const Text('Security Score', style: AppTypography.labelCaps),
               Text(
                 level,
                 style: AppTypography.labelCaps.copyWith(

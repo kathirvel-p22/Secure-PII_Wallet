@@ -46,7 +46,7 @@ class _UnlockFileDialogState extends ConsumerState<UnlockFileDialog> {
     setState(() => _isLoadingThreshold = true);
     
     try {
-      final keyService = ref.read(keyProvider);
+      final keyService = await ref.read(keyProvider.future);
       final threshold = await keyService.getShamirThreshold(widget.file.id);
       
       setState(() {
@@ -155,7 +155,7 @@ class _UnlockFileDialogState extends ConsumerState<UnlockFileDialog> {
                 color: AppColors.neon,
               ),
               const SizedBox(width: 8),
-              Expanded(child: Text('Unlock File', style: AppTypography.h2)),
+              const Expanded(child: Text('Unlock File', style: AppTypography.h2)),
             ],
           ),
           const SizedBox(height: 8),
@@ -170,8 +170,8 @@ class _UnlockFileDialogState extends ConsumerState<UnlockFileDialog> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               color: widget.file.isHighSecurity
-                  ? AppColors.neon.withValues(alpha: 0.2)
-                  : AppColors.accent.withValues(alpha: 0.2),
+                  ? AppColors.neon.withOpacity(0.2)
+                  : AppColors.accent.withOpacity(0.2),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
@@ -201,7 +201,7 @@ class _UnlockFileDialogState extends ConsumerState<UnlockFileDialog> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Password
-                  Text('PASSWORD', style: AppTypography.labelCaps),
+                  const Text('PASSWORD', style: AppTypography.labelCaps),
                   const SizedBox(height: 8),
                   TextField(
                     controller: _passwordController,

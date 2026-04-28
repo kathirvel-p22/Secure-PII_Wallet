@@ -69,7 +69,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
     });
 
     try {
-      final masterPasswordService = ref.read(masterPasswordServiceProvider);
+      final masterPasswordService = await ref.read(masterPasswordServiceProvider.future);
       await masterPasswordService.setupMasterPassword(password);
 
       if (mounted) {
@@ -107,7 +107,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
           icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: _isLoading ? null : () => context.go('/onboarding'),
         ),
-        title: Text(
+        title: const Text(
           'Master Password',
           style: AppTypography.h2,
         ),
@@ -125,7 +125,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppColors.error.withValues(alpha: 0.1),
+                  color: AppColors.error.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(40),
                   border: Border.all(color: AppColors.error, width: 2),
                 ),
@@ -162,7 +162,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
               const SizedBox(height: 48),
 
               // Password field
-              Text('MASTER PASSWORD', style: AppTypography.labelCaps),
+              const Text('MASTER PASSWORD', style: AppTypography.labelCaps),
               const SizedBox(height: 8),
               TextField(
                 controller: _passwordController,
@@ -190,7 +190,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Password Strength',
                           style: AppTypography.metadata,
                         ),
@@ -222,7 +222,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
               const SizedBox(height: 24),
 
               // Confirm password field
-              Text('CONFIRM PASSWORD', style: AppTypography.labelCaps),
+              const Text('CONFIRM PASSWORD', style: AppTypography.labelCaps),
               const SizedBox(height: 8),
               TextField(
                 controller: _confirmPasswordController,
@@ -246,7 +246,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.1),
+                    color: AppColors.error.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: AppColors.error),
                   ),
@@ -272,7 +272,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'PASSWORD REQUIREMENTS',
                       style: AppTypography.labelCaps,
                     ),
@@ -314,7 +314,7 @@ class _MasterPasswordSetupScreenState extends ConsumerState<MasterPasswordSetupS
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.warning.withValues(alpha: 0.1),
+                  color: AppColors.warning.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppColors.warning),
                 ),

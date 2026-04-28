@@ -1,14 +1,21 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../crypto/shamir_secret_sharing.dart';
 
 /// Key management service for SSS-style 3-key system
 class KeyService {
-  final SharedPreferences _prefs;
+  static const String _boxName = 'keys_box';
+  late final Box _box;
 
-  KeyService(this._prefs);
+  KeyService._();
+
+  static Future<KeyService> create() async {
+    final service = KeyService._();
+    service._box = await Hive.openBox(_boxName);
+    return service;
+  }
 
   /// Generate 3 random keys (8 characters each, alphanumeric)
   List<String> generateKeys() {
@@ -36,7 +43,7 @@ class KeyService {
     final keyHashes = keys.map((k) => _hashKey(k)).toList();
     final record = KeyRecord(fileId: fileId, keyHashes: keyHashes);
     
-    await _prefs.setString(
+    await _box.put(
       'keys_$fileId',
       jsonEncode(record.toJson()),
     );
@@ -44,7 +51,7 @@ class KeyService {
 
   /// Verify keys for a file
   Future<bool> verifyKeys(String fileId, List<String> inputKeys) async {
-    final storedData = _prefs.getString('keys_$fileId');
+    final storedData = _box.get('keys_$fileId');
     if (storedData == null) return false;
 
     final record = KeyRecord.fromJson(jsonDecode(storedData));
@@ -62,12 +69,12 @@ class KeyService {
 
   /// Delete keys for a file
   Future<void> deleteKeys(String fileId) async {
-    await _prefs.remove('keys_$fileId');
+    await _box.delete('keys_$fileId');
   }
 
   /// Check if keys exist for a file
   Future<bool> hasKeys(String fileId) async {
-    return _prefs.containsKey('keys_$fileId');
+    return _box.containsKey('keys_$fileId');
   }
 
   /// Validate key format (8 alphanumeric characters)
@@ -90,7 +97,7 @@ class KeyService {
       'shares': shares.map((s) => s.toJson()).toList(),
     };
     
-    await _prefs.setString(
+    await _box.put(
       'shamir_$fileId',
       jsonEncode(shareData),
     );
@@ -98,7 +105,7 @@ class KeyService {
 
   /// Get Shamir shares for a file
   Future<List<ShamirShare>> getShamirShares(String fileId) async {
-    final storedData = _prefs.getString('shamir_$fileId');
+    final storedData = _box.get('shamir_$fileId');
     if (storedData == null) {
       throw KeyException('Shamir shares not found for file');
     }
@@ -111,7 +118,7 @@ class KeyService {
 
   /// Get threshold for Shamir shares
   Future<int> getShamirThreshold(String fileId) async {
-    final storedData = _prefs.getString('shamir_$fileId');
+    final storedData = _box.get('shamir_$fileId');
     if (storedData == null) {
       throw KeyException('Shamir shares not found for file');
     }
@@ -122,12 +129,12 @@ class KeyService {
 
   /// Delete Shamir shares for a file
   Future<void> deleteShamirShares(String fileId) async {
-    await _prefs.remove('shamir_$fileId');
+    await _box.delete('shamir_$fileId');
   }
 
   /// Check if Shamir shares exist for a file
   Future<bool> hasShamirShares(String fileId) async {
-    return _prefs.containsKey('shamir_$fileId');
+    return _box.containsKey('shamir_$fileId');
   }
 }
 

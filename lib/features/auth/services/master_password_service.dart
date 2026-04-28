@@ -1,19 +1,26 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 /// Service for managing the master password (strong password for critical operations)
 class MasterPasswordService {
+  static const String _boxName = 'master_password_box';
   static const String _masterPasswordKey = 'master_password_hash';
   static const String _setupCompleteKey = 'master_password_setup_complete';
 
-  final SharedPreferences _prefs;
+  late final Box _box;
 
-  MasterPasswordService(this._prefs);
+  MasterPasswordService._();
+
+  static Future<MasterPasswordService> create() async {
+    final service = MasterPasswordService._();
+    service._box = await Hive.openBox(_boxName);
+    return service;
+  }
 
   /// Check if master password is set up
   Future<bool> isMasterPasswordSetup() async {
-    return _prefs.getBool(_setupCompleteKey) ?? false;
+    return _box.get(_setupCompleteKey, defaultValue: false);
   }
 
   /// Set up master password
@@ -23,13 +30,13 @@ class MasterPasswordService {
     }
 
     final passwordHash = _hashPassword(password);
-    await _prefs.setString(_masterPasswordKey, passwordHash);
-    await _prefs.setBool(_setupCompleteKey, true);
+    await _box.put(_masterPasswordKey, passwordHash);
+    await _box.put(_setupCompleteKey, true);
   }
 
   /// Verify master password
   Future<bool> verifyMasterPassword(String password) async {
-    final storedHash = _prefs.getString(_masterPasswordKey);
+    final storedHash = _box.get(_masterPasswordKey);
     if (storedHash == null) return false;
     
     final passwordHash = _hashPassword(password);
@@ -47,8 +54,8 @@ class MasterPasswordService {
 
   /// Reset master password (requires complete app reset)
   Future<void> resetMasterPassword() async {
-    await _prefs.remove(_masterPasswordKey);
-    await _prefs.remove(_setupCompleteKey);
+    await _box.delete(_masterPasswordKey);
+    await _box.delete(_setupCompleteKey);
   }
 
   /// Hash password for secure storage

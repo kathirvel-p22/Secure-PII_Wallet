@@ -24,11 +24,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       final currentPath = state.matchedLocation;
 
       // Check if PIN is set up
-      final pinService = ref.read(pinServiceProvider);
+      final pinService = await ref.read(pinServiceProvider.future);
       final isPinSetup = await pinService.isPinSetup();
 
       // Check if master password is set up
-      final masterPasswordService = ref.read(masterPasswordServiceProvider);
+      final masterPasswordService = await ref.read(masterPasswordServiceProvider.future);
       final isMasterPasswordSetup = await masterPasswordService.isMasterPasswordSetup();
 
       // Allow splash screen always

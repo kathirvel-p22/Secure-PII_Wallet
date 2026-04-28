@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'core/theme/theme_provider.dart';
 import 'routing/app_router.dart';
-import 'providers/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize SharedPreferences
-  final prefs = await SharedPreferences.getInstance();
+  // Initialize Hive
+  await Hive.initFlutter();
   
   // Disable screenshots for security
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -22,11 +21,8 @@ void main() async {
   ]);
 
   runApp(
-    ProviderScope(
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(prefs),
-      ],
-      child: const SecurePIIWalletApp(),
+    const ProviderScope(
+      child: SecurePIIWalletApp(),
     ),
   );
 }

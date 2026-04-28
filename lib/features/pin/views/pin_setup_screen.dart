@@ -67,7 +67,7 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
     });
 
     try {
-      final pinService = ref.read(pinServiceProvider);
+      final pinService = await ref.read(pinServiceProvider.future);
       await pinService.setupPin(pin);
       
       if (mounted) {
@@ -109,7 +109,7 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
           icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: _isLoading ? null : _goBack,
         ),
-        title: Text(
+        title: const Text(
           'Setup PIN',
           style: AppTypography.h2,
         ),
@@ -126,7 +126,7 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppColors.neon.withValues(alpha: 0.1),
+                  color: AppColors.neon.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(40),
                   border: Border.all(color: AppColors.neon, width: 2),
                 ),
@@ -165,7 +165,7 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
 
               // PIN length selector (only show when not confirming)
               if (!_isConfirming) ...[
-                Text(
+                const Text(
                   'PIN LENGTH',
                   style: AppTypography.labelCaps,
                 ),
@@ -253,7 +253,7 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.neon.withValues(alpha: 0.1) : AppColors.card,
+          color: isSelected ? AppColors.neon.withOpacity(0.1) : AppColors.card,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? AppColors.neon : AppColors.divider,

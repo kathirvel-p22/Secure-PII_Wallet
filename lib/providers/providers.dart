@@ -1,10 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../core/crypto/crypto_service.dart';
 import '../core/storage/storage_service.dart';
-import '../core/storage/web_storage_service.dart';
 import '../core/keys/key_service.dart';
 import '../core/security/security_engine.dart';
 import '../features/files/models/file_meta.dart';
@@ -12,35 +9,29 @@ import '../features/files/models/session_state.dart';
 import '../features/pin/services/pin_service.dart';
 import '../features/auth/services/master_password_service.dart';
 
-// Shared Preferences provider
-final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
-  throw UnimplementedError('SharedPreferences must be initialized in main()');
-});
-
 // Core service providers
 final cryptoProvider = Provider<CryptoService>((ref) {
   return CryptoService();
 });
 
-final storageProvider = Provider<dynamic>((ref) {
-  // Use web storage for web platform, regular storage for mobile
-  if (kIsWeb) {
-    return WebStorageService();
-  } else {
-    return StorageService();
-  }
+final storageProvider = Provider<StorageService>((ref) {
+  return StorageService();
 });
 
-final keyProvider = Provider<KeyService>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return KeyService(prefs);
+final keyProvider = FutureProvider<KeyService>((ref) async {
+  return await KeyService.create();
 });
 
 final securityProvider = Provider<SecurityEngine>((ref) {
   final crypto = ref.watch(cryptoProvider);
   final storage = ref.watch(storageProvider);
-  final keyService = ref.watch(keyProvider);
-  return SecurityEngine(crypto, storage, keyService);
+  final keyServiceAsync = ref.watch(keyProvider);
+  
+  return keyServiceAsync.when(
+    data: (keyService) => SecurityEngine(crypto, storage, keyService),
+    loading: () => throw Exception('KeyService not initialized'),
+    error: (err, stack) => throw err,
+  );
 });
 
 // Session state provider
@@ -94,7 +85,7 @@ final filesProvider = StateNotifierProvider<FilesNotifier, AsyncValue<List<FileM
 });
 
 class FilesNotifier extends StateNotifier<AsyncValue<List<FileMeta>>> {
-  final dynamic _storage; // Can be StorageService or WebStorageService
+  final StorageService _storage;
 
   FilesNotifier(this._storage) : super(const AsyncValue.loading()) {
     loadFiles();
@@ -148,13 +139,11 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
 final autoLockTimerProvider = StateProvider<int>((ref) => 2); // Default 2 minutes
 
 // PIN service provider
-final pinServiceProvider = Provider<PinService>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return PinService(prefs);
+final pinServiceProvider = FutureProvider<PinService>((ref) async {
+  return await PinService.create();
 });
 
 // Master password service provider
-final masterPasswordServiceProvider = Provider<MasterPasswordService>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return MasterPasswordService(prefs);
+final masterPasswordServiceProvider = FutureProvider<MasterPasswordService>((ref) async {
+  return await MasterPasswordService.create();
 });

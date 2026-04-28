@@ -86,7 +86,7 @@ class DashboardScreen extends ConsumerWidget {
                       color: AppColors.error,
                     ),
                     const SizedBox(height: 16),
-                    Text('Error loading files', style: AppTypography.h2),
+                    const Text('Error loading files', style: AppTypography.h2),
                     const SizedBox(height: 8),
                     Text(
                       error.toString(),

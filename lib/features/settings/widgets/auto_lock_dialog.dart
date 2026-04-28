@@ -26,10 +26,10 @@ class _AutoLockDialogState extends ConsumerState<AutoLockDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: AppColors.card,
-      title: Row(
+      title: const Row(
         children: [
-          const Icon(Icons.timer, color: AppColors.warning),
-          const SizedBox(width: 8),
+          Icon(Icons.timer, color: AppColors.warning),
+          SizedBox(width: 8),
           Text('Auto-Lock Timer', style: AppTypography.h2),
         ],
       ),
@@ -38,13 +38,13 @@ class _AutoLockDialogState extends ConsumerState<AutoLockDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Choose how long the app stays unlocked when inactive.',
               style: AppTypography.body,
             ),
             const SizedBox(height: 24),
             
-            Text('TIMER OPTIONS', style: AppTypography.labelCaps),
+            const Text('TIMER OPTIONS', style: AppTypography.labelCaps),
             const SizedBox(height: 16),
             
             ..._timerOptions.map((minutes) => _buildTimerOption(minutes)),
@@ -54,7 +54,7 @@ class _AutoLockDialogState extends ConsumerState<AutoLockDialog> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.warning.withValues(alpha: 0.1),
+                color: AppColors.warning.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.warning),
               ),
@@ -108,7 +108,7 @@ class _AutoLockDialogState extends ConsumerState<AutoLockDialog> {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.neon.withValues(alpha: 0.2) : AppColors.bg,
+          color: isSelected ? AppColors.neon.withOpacity(0.2) : AppColors.bg,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? AppColors.neon : AppColors.divider,

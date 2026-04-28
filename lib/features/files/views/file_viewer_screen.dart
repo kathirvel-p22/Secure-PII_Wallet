@@ -32,7 +32,7 @@ class FileViewerScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                   backgroundColor: AppColors.card,
-                  title: Text('File Info', style: AppTypography.h2),
+                  title: const Text('File Info', style: AppTypography.h2),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,7 @@ class FileViewerScreen extends StatelessWidget {
                 children: [
                   const Icon(Icons.picture_as_pdf, size: 64, color: AppColors.neon),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'PDF Viewer',
                     style: AppTypography.h2,
                   ),

@@ -27,7 +27,7 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
   }
 
   Future<void> _checkLockStatus() async {
-    final pinService = ref.read(pinServiceProvider);
+    final pinService = await ref.read(pinServiceProvider.future);
     final isLocked = await pinService.isPinLocked();
     final failedAttempts = await pinService.getFailedAttempts();
     final lockTimeRemaining = await pinService.getLockTimeRemaining();
@@ -60,7 +60,7 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
     });
 
     try {
-      final pinService = ref.read(pinServiceProvider);
+      final pinService = await ref.read(pinServiceProvider.future);
       final isValid = await pinService.verifyPin(pin);
 
       if (isValid) {
@@ -120,12 +120,12 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: AppColors.neon.withValues(alpha: 0.1),
+                  color: AppColors.neon.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(60),
                   border: Border.all(color: AppColors.neon, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.neon.withValues(alpha: 0.3),
+                      color: AppColors.neon.withOpacity(0.3),
                       blurRadius: 30,
                       spreadRadius: 5,
                     ),
@@ -171,7 +171,7 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.1),
+                    color: AppColors.error.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: AppColors.error),
                   ),
@@ -211,7 +211,7 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
                 Consumer(
                   builder: (context, ref, child) {
                     return FutureBuilder<int>(
-                      future: ref.read(pinServiceProvider).getPinLength(),
+                      future: ref.read(pinServiceProvider.future).then((service) => service.getPinLength()),
                       builder: (context, snapshot) {
                         final pinLength = snapshot.data ?? 4;
                         return PinInput(
@@ -235,7 +235,7 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.warning.withValues(alpha: 0.1),
+                      color: AppColors.warning.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: AppColors.warning),
                     ),
@@ -292,11 +292,11 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text(
+        title: const Text(
           'Need Help?',
           style: AppTypography.h2,
         ),
-        content: Column(
+        content: const Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -304,7 +304,7 @@ class _PinUnlockScreenState extends ConsumerState<PinUnlockScreen> {
               'If this is your first time using the app, you\'ll be guided through the setup process.',
               style: AppTypography.body,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               'If you\'ve forgotten your PIN, you\'ll need to reset the app data.',
               style: AppTypography.body,

@@ -24,7 +24,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     
     if (mounted) {
       // Check if PIN is set up
-      final pinService = ref.read(pinServiceProvider);
+      final pinService = await ref.read(pinServiceProvider.future);
       final isPinSetup = await pinService.isPinSetup();
       
       if (isPinSetup) {
@@ -60,7 +60,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   color: AppColors.card,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.neon.withValues(alpha: 0.3),
+                      color: AppColors.neon.withOpacity(0.3),
                       blurRadius: 30,
                       spreadRadius: 5,
                     ),

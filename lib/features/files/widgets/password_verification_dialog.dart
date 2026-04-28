@@ -76,7 +76,7 @@ class _PasswordVerificationDialogState
           Text(widget.message, style: AppTypography.body),
           const SizedBox(height: 24),
 
-          Text('VERIFY PASSWORD', style: AppTypography.labelCaps),
+          const Text('VERIFY PASSWORD', style: AppTypography.labelCaps),
           const SizedBox(height: 8),
           TextField(
             controller: _passwordController,
@@ -99,7 +99,7 @@ class _PasswordVerificationDialogState
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.warning.withValues(alpha: 0.1),
+              color: AppColors.warning.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.warning),
             ),

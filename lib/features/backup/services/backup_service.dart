@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import '../../../core/crypto/crypto_service.dart';
-import '../../../core/storage/web_storage_service.dart';
+import '../../../core/storage/storage_service.dart';
 import '../../files/models/file_meta.dart';
 
 /// Service for backing up and restoring the entire vault
 class BackupService {
-  final dynamic _storage; // Can be StorageService or WebStorageService
+  final StorageService _storage;
   final CryptoService _crypto;
 
   BackupService(this._storage, this._crypto);
@@ -15,7 +15,7 @@ class BackupService {
   Future<void> exportVault(String backupPassword) async {
     try {
       // Get all file metadata
-      final allMeta = await _storage.getAllMeta();
+      final allMeta = await _storage.loadMeta();
       
       // Create backup data structure
       final backupData = <String, dynamic>{
@@ -29,22 +29,12 @@ class BackupService {
         try {
           // Read encrypted file data
           final encryptedData = await _storage.readEncrypted(meta.id);
-          
-          // Get keys if they exist
-          Map<String, dynamic>? keysData;
-          if (_storage is WebStorageService) {
-            final webStorage = _storage;
-            if (await webStorage.hasKeys(meta.id)) {
-              keysData = await webStorage.getKeys(meta.id);
-            }
-          }
 
           // Add file to backup
           (backupData['files'] as List<Map<String, dynamic>>).add({
             'meta': meta.toJson(),
             'encryptedData': base64Encode(encryptedData.cipher),
             'encryptedIv': base64Encode(encryptedData.iv),
-            'keys': keysData,
           });
         } catch (e) {
           // Skip files that can't be read
@@ -115,12 +105,6 @@ class BackupService {
           // Store encrypted file
           await _storage.writeEncrypted(meta.id, encryptedPayload);
           
-          // Store keys if they exist
-          if (keysData != null && _storage is WebStorageService) {
-            final webStorage = _storage;
-            await webStorage.storeKeys(meta.id, keysData);
-          }
-          
           // Store metadata
           await _storage.addMeta(meta);
           
@@ -141,7 +125,7 @@ class BackupService {
   Future<void> clearAllData() async {
     try {
       // Get all file metadata
-      final allMeta = await _storage.getAllMeta();
+      final allMeta = await _storage.loadMeta();
       
       // Delete each file
       for (final meta in allMeta) {
@@ -149,26 +133,12 @@ class BackupService {
           // Delete encrypted file
           await _storage.deleteEncrypted(meta.id);
           
-          // Delete keys if they exist
-          if (_storage is WebStorageService) {
-            final webStorage = _storage;
-            if (await webStorage.hasKeys(meta.id)) {
-              await webStorage.deleteKeys(meta.id);
-            }
-          }
-          
           // Remove metadata
           await _storage.removeMeta(meta.id);
         } catch (e) {
           // Continue even if some files can't be deleted
           print('Error deleting file ${meta.name}: $e');
         }
-      }
-      
-      // Clear any remaining data
-      if (_storage is WebStorageService) {
-        final webStorage = _storage;
-        await webStorage.clearAll();
       }
       
     } catch (e) {
@@ -207,7 +177,7 @@ class BackupService {
   /// Get backup statistics
   Future<Map<String, dynamic>> getBackupStats() async {
     try {
-      final allMeta = await _storage.getAllMeta();
+      final allMeta = await _storage.loadMeta();
       
       int totalFiles = allMeta.length;
       int totalSize = 0;

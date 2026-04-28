@@ -186,7 +186,7 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen>
               'Monitor suspicious activity',
               'Active',
               Icons.warning,
-              trailing: Switch(
+              trailing: const Switch(
                 value: true,
                 onChanged: null, // Coming soon
               ),
@@ -234,7 +234,7 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Security Score', style: AppTypography.h2),
+                    const Text('Security Score', style: AppTypography.h2),
                     Text(
                       'Overall security assessment',
                       style: AppTypography.metadata.copyWith(
@@ -387,7 +387,7 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('QUICK ACTIONS', style: AppTypography.labelCaps),
+        const Text('QUICK ACTIONS', style: AppTypography.labelCaps),
         const SizedBox(height: 12),
         Row(
           children: [

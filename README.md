@@ -319,7 +319,30 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📥 Download & Installation
 
-### 🎯 **METHOD 1: Direct Installation (RECOMMENDED - Easiest!)**
+### 🚀 **Quick Download - APK Ready!**
+
+**✅ Pre-built APK available!** Download and install directly on your Android phone.
+
+#### 📲 **Download APK**
+
+**Latest Release**: v1.0.0 (21.8 MB)
+
+[![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/download/v1.0.0/app-release.apk)
+
+**Direct Link**: [app-release.apk](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/download/v1.0.0/app-release.apk)
+
+#### 📱 **Installation Steps**
+
+1. **Download** the APK file from the link above
+2. **Open** the downloaded file on your Android phone
+3. **Allow** installation from unknown sources if prompted
+4. **Install** and enjoy!
+
+**Minimum Requirements**: Android 5.0 (API 21) or higher
+
+---
+
+### 🎯 **METHOD 1: Direct Installation from Source (Alternative)**
 
 **No APK needed!** Install the app permanently on your Android phone in 3 simple steps:
 
@@ -354,26 +377,27 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-### 📦 **METHOD 2: APK File (Requires Flutter Downgrade)**
+### 🔧 **METHOD 2: Build APK Yourself**
 
-To build an APK file, you need to use Flutter 3.19.6 or earlier due to a compatibility issue with Dart 3.11.1.
+Want to build the APK from source? Follow these steps:
 
-#### Option A: Downgrade Flutter Globally
+#### Using Flutter 3.19.6 (Recommended)
 
 ```bash
-# Downgrade Flutter
-flutter downgrade 3.19.6
+# Clone repository
+git clone https://github.com/kathirvel-p22/Secure-PII_Wallet.git
+cd Secure-PII_Wallet/secure_pii_wallet
+
+# Install dependencies
+flutter pub get
 
 # Build APK
-cd secure_pii_wallet
-flutter clean
-flutter pub get
 flutter build apk --release
 ```
 
 **APK Location**: `build/app/outputs/flutter-apk/app-release.apk`
 
-#### Option B: Use Flutter Version Manager (FVM) - Recommended
+#### Using FVM (Flutter Version Manager)
 
 ```bash
 # Install FVM
@@ -389,23 +413,29 @@ fvm flutter pub get
 fvm flutter build apk --release
 ```
 
-**APK Location**: `build/app/outputs/flutter-apk/app-release.apk`
-
-📖 **[Complete APK Build Guide →](BUILD_APK_SOLUTION.md)**
+📖 **[Complete Build Guide →](BUILD_APK_SOLUTION.md)**
 
 ---
 
-### ⚠️ APK Build Status
+### ✅ **Build Status**
 
-**Current Issue**: Flutter 3.41.4 (Dart 3.11.1) has breaking changes with the `web` package that prevent APK compilation. This is a known Flutter ecosystem issue affecting many projects.
+**Current Version**: v1.0.0  
+**Build Status**: ✅ **SUCCESS**  
+**Flutter Version**: 3.19.6  
+**Dart Version**: 3.3.4  
+**APK Size**: 21.8 MB  
+**Last Built**: April 28, 2026
 
-**Solutions Available**:
-1. ✅ **Use Method 1** (Direct Installation) - Works perfectly with any Flutter version
-2. ✅ **Use Method 2** (Downgrade to Flutter 3.19.6) - Builds APK successfully
+**What's Fixed**:
+- ✅ Replaced `shared_preferences` with `hive_flutter` (no web dependency)
+- ✅ Fixed Flutter API compatibility (3.22+ → 3.19.6)
+- ✅ Fixed Riverpod async provider usage
+- ✅ Removed all web-only code
+- ✅ All features working perfectly
 
-**App Functionality**: ✅ **100% Working** - All features (encryption, SSS, file management, PIN, master password) work perfectly when installed.
+**App Functionality**: ✅ **100% Working** - All features (encryption, SSS, file management, PIN, master password) work perfectly!
 
-📄 **[Technical Details & Solutions →](BUILD_APK_SOLUTION.md)**
+📄 **[Technical Details & Build Log →](APK_BUILD_SUCCESS.md)**
 
 ---
 

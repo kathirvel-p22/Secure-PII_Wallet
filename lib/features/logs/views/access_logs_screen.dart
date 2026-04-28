@@ -245,7 +245,7 @@ class _AccessLogsScreenState extends ConsumerState<AccessLogsScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          Text(
+          const Text(
             'No Access Logs',
             style: AppTypography.h2,
           ),

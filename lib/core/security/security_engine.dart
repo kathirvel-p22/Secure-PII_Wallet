@@ -219,8 +219,8 @@ class SecurityEngine {
       
       // Split the AES key using Shamir's Secret Sharing
       // Use default values for legacy compatibility
-      final totalShares = 5; // Default total shares
-      final threshold = 3; // Default threshold
+      const totalShares = 5; // Default total shares
+      const threshold = 3; // Default threshold
       
       final shares = ShamirSecretSharing.split(
         secret: aesKey,

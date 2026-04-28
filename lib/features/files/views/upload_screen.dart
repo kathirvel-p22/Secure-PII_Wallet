@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:file_picker/file_picker.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
@@ -24,7 +23,7 @@ class UploadScreen extends ConsumerStatefulWidget {
 }
 
 class _UploadScreenState extends ConsumerState<UploadScreen> {
-  dynamic _selectedFile; // Can be File or WebFile
+  File? _selectedFile;
   bool _highSecurity = false;
   bool _obscurePassword = true;
   bool _isUploading = false;
@@ -110,7 +109,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
     );
   }
 
-  void _generateKeys() {
+  Future<void> _generateKeys() async {
     if (_highSecurity) {
       // Generate Shamir shares for high security mode
 
@@ -142,7 +141,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       _showKeysDialog(shareStrings);
     } else {
       // Generate simple keys for legacy mode
-      final keyService = ref.read(keyProvider);
+      final keyService = await ref.read(keyProvider.future);
       final keys = keyService.generateKeys();
 
       setState(() {
@@ -228,7 +227,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.1),
+                color: AppColors.error.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.error),
               ),
@@ -261,10 +260,10 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Row(
+        title: const Row(
           children: [
-            const Icon(Icons.warning, color: AppColors.warning),
-            const SizedBox(width: 8),
+            Icon(Icons.warning, color: AppColors.warning),
+            SizedBox(width: 8),
             Text('PII DETECTED', style: AppTypography.h2),
           ],
         ),
@@ -272,7 +271,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Sensitive information detected in your file:',
               style: AppTypography.body,
             ),
@@ -285,10 +284,10 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                     margin: const EdgeInsets.only(bottom: 8),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.warning.withValues(alpha: 0.1),
+                      color: AppColors.warning.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: AppColors.warning.withValues(alpha: 0.3),
+                        color: AppColors.warning.withOpacity(0.3),
                       ),
                     ),
                     child: Row(
@@ -327,7 +326,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.neon.withValues(alpha: 0.1),
+                color: AppColors.neon.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.neon),
               ),
@@ -413,45 +412,15 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
     setState(() => _isUploading = true);
 
     try {
-      if (kIsWeb) {
-        // Handle web file upload
-        final webFile = _selectedFile as WebFile;
-
-        if (_highSecurity &&
-            _generatedShares != null &&
-            _generatedAESKey != null) {
-          // Use SSS method with pre-generated shares
-          await ref
-              .read(fileControllerProvider)
-              .uploadWebFileWithShares(
-                webFile: webFile,
-                password: _passwordController.text,
-                aesKey: _generatedAESKey!,
-                allShares: _generatedShares!,
-                threshold: _threshold, // Use user-configured threshold
-              );
-        } else {
-          // Use regular method
-          await ref
-              .read(fileControllerProvider)
-              .uploadWebFile(
-                webFile: webFile,
-                password: _passwordController.text,
-                highSecurity: _highSecurity,
-                keys: keys,
-              );
-        }
-      } else {
-        // Handle regular file upload
-        await ref
-            .read(fileControllerProvider)
-            .upload(
-              file: _selectedFile as File,
-              password: _passwordController.text,
-              highSecurity: _highSecurity,
-              keys: keys,
-            );
-      }
+      // Handle file upload
+      await ref
+          .read(fileControllerProvider)
+          .upload(
+            file: _selectedFile!,
+            password: _passwordController.text,
+            highSecurity: _highSecurity,
+            keys: keys,
+          );
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -513,20 +482,18 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                     const SizedBox(height: 16),
                     Text(
                       _selectedFile != null
-                          ? (_selectedFile is WebFile
-                                ? (_selectedFile as WebFile).name
-                                : (_selectedFile as File).path
-                                      .split('/')
-                                      .last
-                                      .split('\\')
-                                      .last)
+                          ? _selectedFile!.path
+                                .split('/')
+                                .last
+                                .split('\\')
+                                .last
                           : 'Tap to select file',
                       style: AppTypography.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                     if (_selectedFile != null) ...[
                       const SizedBox(height: 8),
-                      Text(
+                      const Text(
                         'PDF, JPG, PNG supported',
                         style: AppTypography.metadata,
                       ),
@@ -543,8 +510,8 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: _piiDetection!.suggestHighSecurity
-                      ? AppColors.error.withValues(alpha: 0.1)
-                      : AppColors.warning.withValues(alpha: 0.1),
+                      ? AppColors.error.withOpacity(0.1)
+                      : AppColors.warning.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: _piiDetection!.suggestHighSecurity
@@ -612,7 +579,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
             ],
 
             // Security mode
-            Text('SECURITY MODE', style: AppTypography.labelCaps),
+            const Text('SECURITY MODE', style: AppTypography.labelCaps),
             const SizedBox(height: 12),
 
             Row(
@@ -641,7 +608,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
             const SizedBox(height: 24),
 
             // Password
-            Text('PASSWORD', style: AppTypography.labelCaps),
+            const Text('PASSWORD', style: AppTypography.labelCaps),
             const SizedBox(height: 12),
             TextField(
               controller: _passwordController,
@@ -659,7 +626,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Min 10 chars, uppercase, lowercase, number, special char',
               style: AppTypography.metadata,
             ),
@@ -670,7 +637,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('SECURITY SHARES', style: AppTypography.labelCaps),
+                  const Text('SECURITY SHARES', style: AppTypography.labelCaps),
                   Row(
                     children: [
                       if (_highSecurity) ...[
@@ -695,7 +662,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.neon.withValues(alpha: 0.1),
+                    color: AppColors.neon.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: AppColors.neon),
                   ),
@@ -772,7 +739,7 @@ class _SecurityModeCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: selected ? AppColors.neon.withValues(alpha: 0.1) : AppColors.card,
+          color: selected ? AppColors.neon.withOpacity(0.1) : AppColors.card,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: selected ? AppColors.neon : AppColors.divider,

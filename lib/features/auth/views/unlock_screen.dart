@@ -78,7 +78,7 @@ class _UnlockScreenState extends ConsumerState<UnlockScreen> {
                 ),
                 const SizedBox(height: 8),
 
-                Text(
+                const Text(
                   'Enter to access your secure files',
                   style: AppTypography.body,
                   textAlign: TextAlign.center,
@@ -122,7 +122,7 @@ class _UnlockScreenState extends ConsumerState<UnlockScreen> {
                 const SizedBox(height: 16),
 
                 // Info text
-                Text(
+                const Text(
                   'First time? Just tap unlock to get started',
                   style: AppTypography.metadata,
                   textAlign: TextAlign.center,

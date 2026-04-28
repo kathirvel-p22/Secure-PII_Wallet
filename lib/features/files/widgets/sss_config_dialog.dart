@@ -22,10 +22,10 @@ class _SSSConfigDialogState extends State<SSSConfigDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: AppColors.card,
-      title: Row(
+      title: const Row(
         children: [
-          const Icon(Icons.settings, color: AppColors.neon),
-          const SizedBox(width: 8),
+          Icon(Icons.settings, color: AppColors.neon),
+          SizedBox(width: 8),
           Text('SSS Configuration', style: AppTypography.h2),
         ],
       ),
@@ -34,14 +34,14 @@ class _SSSConfigDialogState extends State<SSSConfigDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Configure Shamir\'s Secret Sharing parameters for maximum security.',
               style: AppTypography.body,
             ),
             const SizedBox(height: 24),
             
             // Total Shares
-            Text('Total Shares to Generate', style: AppTypography.labelCaps),
+            const Text('Total Shares to Generate', style: AppTypography.labelCaps),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(16),
@@ -102,7 +102,7 @@ class _SSSConfigDialogState extends State<SSSConfigDialog> {
             const SizedBox(height: 16),
             
             // Threshold
-            Text('Threshold (Shares needed to unlock)', style: AppTypography.labelCaps),
+            const Text('Threshold (Shares needed to unlock)', style: AppTypography.labelCaps),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(16),
@@ -160,7 +160,7 @@ class _SSSConfigDialogState extends State<SSSConfigDialog> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.neon.withValues(alpha: 0.1),
+                color: AppColors.neon.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.neon),
               ),
@@ -200,7 +200,7 @@ class _SSSConfigDialogState extends State<SSSConfigDialog> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Recommended Configurations:',
                     style: AppTypography.labelCaps,
                   ),

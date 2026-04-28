@@ -27,7 +27,7 @@ class MainNavigation extends ConsumerWidget {
           color: AppColors.card,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),
@@ -84,7 +84,7 @@ class MainNavigation extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected 
-              ? AppColors.neon.withValues(alpha: 0.15)
+              ? AppColors.neon.withOpacity(0.15)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),

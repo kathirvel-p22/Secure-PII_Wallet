@@ -178,7 +178,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: AppColors.neon.withValues(alpha: 0.1),
+              color: AppColors.neon.withOpacity(0.1),
               borderRadius: BorderRadius.circular(60),
               border: Border.all(color: AppColors.neon, width: 2),
             ),

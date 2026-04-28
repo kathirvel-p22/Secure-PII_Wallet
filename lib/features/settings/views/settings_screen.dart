@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart'; // Temporarily disabled for APK build
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/typography.dart';
 import '../../../providers/providers.dart';
@@ -189,10 +189,10 @@ class SettingsScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            ListTile(
-              leading: const Icon(Icons.folder, color: AppColors.accent),
-              title: const Text('Storage Location'),
-              subtitle: const Text('Browser Local Storage'),
+            const ListTile(
+              leading: Icon(Icons.folder, color: AppColors.accent),
+              title: Text('Storage Location'),
+              subtitle: Text('Browser Local Storage'),
               contentPadding: EdgeInsets.zero,
             ),
             const Divider(),
@@ -225,17 +225,17 @@ class SettingsScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            ListTile(
-              leading: const Icon(Icons.info, color: AppColors.neon),
-              title: const Text('Version'),
-              subtitle: const Text('1.0.0 (Build 1)'),
+            const ListTile(
+              leading: Icon(Icons.info, color: AppColors.neon),
+              title: Text('Version'),
+              subtitle: Text('1.0.0 (Build 1)'),
               contentPadding: EdgeInsets.zero,
             ),
             const Divider(),
-            ListTile(
-              leading: const Icon(Icons.security, color: AppColors.accent),
-              title: const Text('Encryption'),
-              subtitle: const Text('AES-256 + Shamir\'s Secret Sharing'),
+            const ListTile(
+              leading: Icon(Icons.security, color: AppColors.accent),
+              title: Text('Encryption'),
+              subtitle: Text('AES-256 + Shamir\'s Secret Sharing'),
               contentPadding: EdgeInsets.zero,
             ),
             const Divider(),
@@ -261,7 +261,7 @@ class SettingsScreen extends ConsumerWidget {
 
   Widget _buildDangerCard(BuildContext context, WidgetRef ref) {
     return Card(
-      color: AppColors.error.withValues(alpha: 0.1),
+      color: AppColors.error.withOpacity(0.1),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -423,8 +423,8 @@ class SettingsScreen extends ConsumerWidget {
                   return;
                 }
 
-                // Pick backup file
-                final result = await FilePicker.platform.pickFiles(
+                // Pick backup file - TEMPORARILY DISABLED (file_picker removed for APK build)
+                /* final result = await FilePicker.platform.pickFiles(
                   type: FileType.custom,
                   allowedExtensions: ['json'],
                 );
@@ -468,6 +468,17 @@ class SettingsScreen extends ConsumerWidget {
                       ),
                     );
                   }
+                } */
+                
+                // Temporary message
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Import feature temporarily unavailable in this build'),
+                      backgroundColor: AppColors.warning,
+                    ),
+                  );
                 }
               },
               child: isImporting
@@ -620,8 +631,8 @@ class SettingsScreen extends ConsumerWidget {
                   final storage = ref.read(storageProvider);
                   final crypto = ref.read(cryptoProvider);
                   final backupService = BackupService(storage, crypto);
-                  final pinService = ref.read(pinServiceProvider);
-                  final masterPasswordService = ref.read(masterPasswordServiceProvider);
+                  final pinService = await ref.read(pinServiceProvider.future);
+                  final masterPasswordService = await ref.read(masterPasswordServiceProvider.future);
                   
                   // Perform complete system reset (delete everything)
                   await backupService.completeSystemReset(pinService, masterPasswordService);

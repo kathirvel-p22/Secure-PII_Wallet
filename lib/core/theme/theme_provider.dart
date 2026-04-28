@@ -31,18 +31,18 @@ class AppTheme {
       dividerColor: AppColors.divider,
       
       // AppBar theme
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.surface,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: const TextStyle(
+        titleTextStyle: TextStyle(
           color: AppColors.textPrimary,
           fontSize: 18,
           fontWeight: FontWeight.w600,
           letterSpacing: 1.2,
         ),
-        iconTheme: const IconThemeData(color: AppColors.textPrimary),
+        iconTheme: IconThemeData(color: AppColors.textPrimary),
       ),
 
       // Input decoration theme
@@ -104,7 +104,7 @@ class AppTheme {
       ),
 
       // Bottom navigation bar theme
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.surface,
         selectedItemColor: AppColors.neon,
         unselectedItemColor: AppColors.textSecondary,
@@ -113,16 +113,16 @@ class AppTheme {
       ),
 
       // Navigation rail theme
-      navigationRailTheme: NavigationRailThemeData(
+      navigationRailTheme: const NavigationRailThemeData(
         backgroundColor: AppColors.surface,
-        selectedIconTheme: const IconThemeData(color: AppColors.neon),
-        unselectedIconTheme: const IconThemeData(color: AppColors.textSecondary),
-        selectedLabelTextStyle: const TextStyle(color: AppColors.neon),
-        unselectedLabelTextStyle: const TextStyle(color: AppColors.textSecondary),
+        selectedIconTheme: IconThemeData(color: AppColors.neon),
+        unselectedIconTheme: IconThemeData(color: AppColors.textSecondary),
+        selectedLabelTextStyle: TextStyle(color: AppColors.neon),
+        unselectedLabelTextStyle: TextStyle(color: AppColors.textSecondary),
       ),
 
       // Drawer theme
-      drawerTheme: DrawerThemeData(
+      drawerTheme: const DrawerThemeData(
         backgroundColor: AppColors.surface,
       ),
 
@@ -134,14 +134,14 @@ class AppTheme {
 
       // Switch theme
       switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
+        thumbColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
             return AppColors.neon;
           }
           return AppColors.textSecondary;
         }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
+        trackColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
             return AppColors.neon.withOpacity(0.3);
           }
           return AppColors.divider;
@@ -168,18 +168,18 @@ class AppTheme {
       dividerColor: const Color(0xFFE9ECEF),
       
       // AppBar theme
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF212529),
+        foregroundColor: Color(0xFF212529),
         elevation: 1,
         centerTitle: true,
-        titleTextStyle: const TextStyle(
+        titleTextStyle: TextStyle(
           color: Color(0xFF212529),
           fontSize: 18,
           fontWeight: FontWeight.w600,
           letterSpacing: 1.2,
         ),
-        iconTheme: const IconThemeData(color: Color(0xFF212529)),
+        iconTheme: IconThemeData(color: Color(0xFF212529)),
       ),
 
       // Input decoration theme
@@ -241,25 +241,25 @@ class AppTheme {
       ),
 
       // Bottom navigation bar theme
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF00C896),
-        unselectedItemColor: const Color(0xFF6C757D),
+        selectedItemColor: Color(0xFF00C896),
+        unselectedItemColor: Color(0xFF6C757D),
         type: BottomNavigationBarType.fixed,
         elevation: 8,
       ),
 
       // Navigation rail theme
-      navigationRailTheme: NavigationRailThemeData(
+      navigationRailTheme: const NavigationRailThemeData(
         backgroundColor: Colors.white,
-        selectedIconTheme: const IconThemeData(color: Color(0xFF00C896)),
-        unselectedIconTheme: const IconThemeData(color: Color(0xFF6C757D)),
-        selectedLabelTextStyle: const TextStyle(color: Color(0xFF00C896)),
-        unselectedLabelTextStyle: const TextStyle(color: Color(0xFF6C757D)),
+        selectedIconTheme: IconThemeData(color: Color(0xFF00C896)),
+        unselectedIconTheme: IconThemeData(color: Color(0xFF6C757D)),
+        selectedLabelTextStyle: TextStyle(color: Color(0xFF00C896)),
+        unselectedLabelTextStyle: TextStyle(color: Color(0xFF6C757D)),
       ),
 
       // Drawer theme
-      drawerTheme: DrawerThemeData(
+      drawerTheme: const DrawerThemeData(
         backgroundColor: Colors.white,
       ),
 
@@ -271,14 +271,14 @@ class AppTheme {
 
       // Switch theme
       switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
+        thumbColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
             return const Color(0xFF00C896);
           }
           return const Color(0xFF6C757D);
         }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
+        trackColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
             return const Color(0xFF00C896).withOpacity(0.3);
           }
           return const Color(0xFFDEE2E6);

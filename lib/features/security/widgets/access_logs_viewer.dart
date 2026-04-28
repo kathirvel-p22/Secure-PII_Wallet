@@ -95,7 +95,7 @@ class _AccessLogsViewerState extends ConsumerState<AccessLogsViewer> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Access Logs', style: AppTypography.h2),
+                      const Text('Access Logs', style: AppTypography.h2),
                       Text(
                         'Security audit trail',
                         style: AppTypography.metadata.copyWith(

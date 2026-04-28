@@ -29,12 +29,12 @@ class EmptyState extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
+              const Text(
                 'No Files Yet',
                 style: AppTypography.h2,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 'Upload your first secure file to get started',
                 style: AppTypography.body,
                 textAlign: TextAlign.center,

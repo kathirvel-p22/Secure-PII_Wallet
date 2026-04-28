@@ -51,7 +51,7 @@ class _MasterPasswordVerificationDialogState
     });
 
     try {
-      final masterPasswordService = ref.read(masterPasswordServiceProvider);
+      final masterPasswordService = await ref.read(masterPasswordServiceProvider.future);
       final isValid = await masterPasswordService.verifyMasterPassword(password);
 
       if (isValid) {
@@ -97,7 +97,7 @@ class _MasterPasswordVerificationDialogState
             style: AppTypography.body,
           ),
           const SizedBox(height: 24),
-          Text(
+          const Text(
             'MASTER PASSWORD',
             style: AppTypography.labelCaps,
           ),
@@ -125,7 +125,7 @@ class _MasterPasswordVerificationDialogState
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.1),
+                color: AppColors.error.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.error),
               ),
