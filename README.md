@@ -60,48 +60,38 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Flutter SDK 3.0 or higher
-- Dart SDK 3.0 or higher
+### For Users (Just Want to Use the App)
+
+**Simply download and install the APK!** See the [Download & Install](#-download--install) section above.
+
+### For Developers (Want to Build from Source)
+
+#### Prerequisites
+- Flutter SDK 3.19.6 or higher
+- Dart SDK 3.3.4 or higher
 - Android Studio / VS Code
 - Git
 
-### Installation
+#### Clone and Run
 
-1. **Clone the repository**
 ```bash
+# Clone the repository
 git clone https://github.com/kathirvel-p22/Secure-PII_Wallet.git
 cd Secure-PII_Wallet/secure_pii_wallet
-```
 
-2. **Install dependencies**
-```bash
+# Install dependencies
 flutter pub get
-```
 
-3. **Run the app**
-```bash
-# For Android
+# Run on connected device
 flutter run
 
-# For Web
-flutter run -d chrome
-
-# For iOS
-flutter run -d ios
-```
-
-### Building APK
-
-```bash
-# Build release APK
+# Or build APK
 flutter build apk --release
-
-# Build split APKs per ABI
-flutter build apk --split-per-abi
-
-# APK location: build/app/outputs/flutter-apk/app-release.apk
 ```
+
+📖 **Detailed Build Guide**: [APK_BUILD_SUCCESS.md](APK_BUILD_SUCCESS.md)
+
+---
 
 ## 📖 User Guide
 
@@ -308,134 +298,32 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
    - Clear sensitive data from memory
    - Implement secure deletion
 
-## 🐛 Known Issues
+## 🐛 Known Issues & Limitations
 
-- **APK Build Issue**: Currently experiencing compilation errors with the `web` package dependency (version 1.1.1) when building Android APK. This is a known Flutter issue with web dependencies in Android builds. 
-  - **Workaround**: The app runs perfectly in debug mode (`flutter run`)
-  - **Fix in progress**: Working on dependency resolution
-  - **Web version**: Works perfectly with `flutter run -d chrome`
 - iOS requires additional setup for secure storage
-- Large files (>100MB) may cause performance issues
+- Large files (>100MB) may cause performance issues on older devices
+- Web version has limited file system access due to browser security
 
-## 📥 Download & Installation
+---## 📥 Download & Install
 
-### 🚀 **Quick Download - APK Ready!**
+### 📲 **Download APK**
 
-**✅ Pre-built APK available!** Download and install directly on your Android phone.
+**Latest Version**: v1.0.0 | **Size**: 21.8 MB | **Android**: 5.0+
 
-#### 📲 **Download APK**
+[![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
 
-**Latest Release**: v1.0.0 (21.8 MB)
+**Direct Download**: [app-release.apk](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
 
-[![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/download/v1.0.0/app-release.apk)
+### 📱 **Installation Steps**
 
-**Direct Link**: [app-release.apk](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/download/v1.0.0/app-release.apk)
-
-#### 📱 **Installation Steps**
-
-1. **Download** the APK file from the link above
+1. **Download** the APK file using the button above
 2. **Open** the downloaded file on your Android phone
-3. **Allow** installation from unknown sources if prompted
-4. **Install** and enjoy!
+3. **Allow** installation from unknown sources if prompted:
+   - Settings → Security → Unknown Sources → Enable
+   - Or Settings → Apps → Install Unknown Apps → Enable for your browser
+4. **Install** and start using the app!
 
-**Minimum Requirements**: Android 5.0 (API 21) or higher
-
----
-
-### 🎯 **METHOD 1: Direct Installation from Source (Alternative)**
-
-**No APK needed!** Install the app permanently on your Android phone in 3 simple steps:
-
-#### Prerequisites:
-- Computer with Flutter SDK ([Download Flutter](https://docs.flutter.dev/get-started/install))
-- Android phone with USB cable
-
-#### Steps:
-
-1. **Enable USB Debugging** on your phone:
-   - Go to Settings → About Phone
-   - Tap "Build Number" 7 times (enables Developer Options)
-   - Go to Settings → Developer Options
-   - Enable "USB Debugging"
-
-2. **Connect phone to computer** via USB cable
-
-3. **Run these commands**:
-   ```bash
-   git clone https://github.com/kathirvel-p22/Secure-PII_Wallet.git
-   cd Secure-PII_Wallet/secure_pii_wallet
-   flutter pub get
-   flutter run --release
-   ```
-
-**✅ Done!** The app is now permanently installed on your phone. You can disconnect the USB cable and use the app normally.
-
-**Time Required**: 5-10 minutes  
-**Advantages**: No APK build issues, works with any Flutter version, permanent installation
-
-📖 **[Detailed Installation Guide →](INSTALL_ON_PHONE.md)**
-
----
-
-### 🔧 **METHOD 2: Build APK Yourself**
-
-Want to build the APK from source? Follow these steps:
-
-#### Using Flutter 3.19.6 (Recommended)
-
-```bash
-# Clone repository
-git clone https://github.com/kathirvel-p22/Secure-PII_Wallet.git
-cd Secure-PII_Wallet/secure_pii_wallet
-
-# Install dependencies
-flutter pub get
-
-# Build APK
-flutter build apk --release
-```
-
-**APK Location**: `build/app/outputs/flutter-apk/app-release.apk`
-
-#### Using FVM (Flutter Version Manager)
-
-```bash
-# Install FVM
-dart pub global activate fvm
-
-# Install Flutter 3.19.6
-fvm install 3.19.6
-
-# Build APK using Flutter 3.19.6
-cd secure_pii_wallet
-fvm use 3.19.6
-fvm flutter pub get
-fvm flutter build apk --release
-```
-
-📖 **[Complete Build Guide →](BUILD_APK_SOLUTION.md)**
-
----
-
-### ✅ **Build Status**
-
-**Current Version**: v1.0.0  
-**Build Status**: ✅ **SUCCESS**  
-**Flutter Version**: 3.19.6  
-**Dart Version**: 3.3.4  
-**APK Size**: 21.8 MB  
-**Last Built**: April 28, 2026
-
-**What's Fixed**:
-- ✅ Replaced `shared_preferences` with `hive_flutter` (no web dependency)
-- ✅ Fixed Flutter API compatibility (3.22+ → 3.19.6)
-- ✅ Fixed Riverpod async provider usage
-- ✅ Removed all web-only code
-- ✅ All features working perfectly
-
-**App Functionality**: ✅ **100% Working** - All features (encryption, SSS, file management, PIN, master password) work perfectly!
-
-📄 **[Technical Details & Build Log →](APK_BUILD_SUCCESS.md)**
+**Minimum Requirements**: Android 5.0 (Lollipop) or higher
 
 ---
 
