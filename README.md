@@ -308,19 +308,27 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Large files (>100MB) may cause performance issues on older devices
 - Web version has limited file system access due to browser security
 
----## 📥 Download & Install
+---
+
+## 📥 Download & Install
 
 ### 📲 **Download APK**
 
-**Latest Version**: v1.0.0 | **Size**: 21.8 MB | **Android**: 5.0+
+**Latest Version**: v1.0.0 | **Size**: 22.1 MB | **Android**: 5.0+
 
 [![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
 
-**Direct Download**: [app-release.apk](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
+### 🔗 **Direct Download Link**
+
+```
+https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk
+```
+
+**Or click here**: [Download app-release.apk](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
 
 ### 📱 **Installation Steps**
 
-1. **Download** the APK file using the button above
+1. **Download** the APK file using the link above
 2. **Open** the downloaded file on your Android phone
 3. **Allow** installation from unknown sources if prompted:
    - Settings → Security → Unknown Sources → Enable
@@ -328,6 +336,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 4. **Install** and start using the app!
 
 **Minimum Requirements**: Android 5.0 (Lollipop) or higher
+
+### ✨ **What's Included**
+- ✅ Custom Secure PII Wallet logo
+- ✅ Military-grade AES-256 encryption
+- ✅ Dual security (Master Password + PIN)
+- ✅ Shamir's Secret Sharing
+- ✅ Google Play Protect compatible (API 34)
 
 ---
 
