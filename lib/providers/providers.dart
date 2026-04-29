@@ -26,16 +26,17 @@ final securityProvider = Provider<SecurityEngine>((ref) {
   final crypto = ref.watch(cryptoProvider);
   final storage = ref.watch(storageProvider);
   final keyServiceAsync = ref.watch(keyProvider);
-  
+
   return keyServiceAsync.when(
     data: (keyService) => SecurityEngine(crypto, storage, keyService),
-    loading: () => throw Exception('KeyService not initialized'),
+    loading: () => SecurityEngine(crypto, storage, KeyService.empty()),
     error: (err, stack) => throw err,
   );
 });
 
 // Session state provider
-final sessionProvider = StateNotifierProvider<SessionNotifier, SessionState>((ref) {
+final sessionProvider =
+    StateNotifierProvider<SessionNotifier, SessionState>((ref) {
   return SessionNotifier();
 });
 
@@ -57,7 +58,7 @@ class SessionNotifier extends StateNotifier<SessionState> {
 
   void incrementFailedAttempts() {
     final newAttempts = state.failedAttempts + 1;
-    
+
     if (newAttempts >= SecurityEngine.maxFailedAttempts) {
       // Temporary lock
       state = state.copyWith(
@@ -79,7 +80,8 @@ class SessionNotifier extends StateNotifier<SessionState> {
 }
 
 // Files list provider
-final filesProvider = StateNotifierProvider<FilesNotifier, AsyncValue<List<FileMeta>>>((ref) {
+final filesProvider =
+    StateNotifierProvider<FilesNotifier, AsyncValue<List<FileMeta>>>((ref) {
   final storage = ref.watch(storageProvider);
   return FilesNotifier(storage);
 });
@@ -119,7 +121,8 @@ class FilesNotifier extends StateNotifier<AsyncValue<List<FileMeta>>> {
 }
 
 // Theme provider
-final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+final themeModeProvider =
+    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
   return ThemeModeNotifier();
 });
 
@@ -136,7 +139,8 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
 }
 
 // Auto-lock timer provider
-final autoLockTimerProvider = StateProvider<int>((ref) => 2); // Default 2 minutes
+final autoLockTimerProvider =
+    StateProvider<int>((ref) => 2); // Default 2 minutes
 
 // PIN service provider
 final pinServiceProvider = FutureProvider<PinService>((ref) async {
@@ -144,6 +148,7 @@ final pinServiceProvider = FutureProvider<PinService>((ref) async {
 });
 
 // Master password service provider
-final masterPasswordServiceProvider = FutureProvider<MasterPasswordService>((ref) async {
+final masterPasswordServiceProvider =
+    FutureProvider<MasterPasswordService>((ref) async {
   return await MasterPasswordService.create();
 });

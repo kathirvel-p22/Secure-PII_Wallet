@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/utils/web_file_picker.dart';
 import '../../../core/security/access_logger.dart';
 import '../../../providers/providers.dart';
 import '../models/file_meta.dart';
@@ -24,53 +23,6 @@ class FileController {
     // Prepare and store (includes all validation and encryption)
     final meta = await security.prepareAndStore(
       file,
-      password,
-      highSecurity,
-      keys,
-    );
-
-    // Update state
-    ref.read(filesProvider.notifier).addFile(meta);
-
-    return meta;
-  }
-
-  /// Upload web file with pre-generated SSS shares
-  Future<FileMeta> uploadWebFileWithShares({
-    required WebFile webFile,
-    required String password,
-    required Uint8List aesKey,
-    required List<dynamic> allShares, // List of ShamirShare objects
-    required int threshold,
-  }) async {
-    final security = ref.read(securityProvider);
-
-    // Prepare and store web file with shares
-    final meta = await security.prepareAndStoreWebFileWithShares(
-      webFile,
-      password,
-      aesKey,
-      allShares.cast(),
-      threshold,
-    );
-
-    // Update state
-    ref.read(filesProvider.notifier).addFile(meta);
-
-    return meta;
-  }
-
-  Future<FileMeta> uploadWebFile({
-    required WebFile webFile,
-    required String password,
-    required bool highSecurity,
-    List<String>? keys,
-  }) async {
-    final security = ref.read(securityProvider);
-
-    // Prepare and store web file
-    final meta = await security.prepareAndStoreWebFile(
-      webFile,
       password,
       highSecurity,
       keys,

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/colors.dart';
@@ -33,9 +33,6 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
   final _key2Controller = TextEditingController();
   final _key3Controller = TextEditingController();
 
-  // Store the generated shares and AES key
-  List<ShamirShare>? _generatedShares;
-  Uint8List? _generatedAESKey;
   int _totalShares = 5;
   int _threshold = 3;
 
@@ -52,47 +49,53 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
   }
 
   Future<void> _pickFile() async {
-    // File picker commented out to fix Android build
-    /*
-    // Use regular file picker for mobile
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
-    );
-
-    if (result != null) {
-      final file = File(result.files.single.path!);
-
-      // Read file for PII detection
-      Uint8List? fileBytes;
-      try {
-        fileBytes = await file.readAsBytes();
-      } catch (e) {
-        // Handle file read error
-      }
-
-      // Perform PII detection
-      final piiResult = PIIDetector.detectPII(
-        file.path.split('/').last,
-        fileBytes,
+    try {
+      // Use file picker to select any file type
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.any, // Allow ANY file type
+        allowMultiple: false,
       );
 
-      setState(() {
-        _selectedFile = file;
-        _piiDetection = piiResult;
+      if (result != null && result.files.single.path != null) {
+        final file = File(result.files.single.path!);
 
-        // Auto-suggest high security if PII detected
-        if (piiResult.suggestHighSecurity) {
-          _highSecurity = true;
+        // Read file for PII detection
+        Uint8List? fileBytes;
+        try {
+          fileBytes = await file.readAsBytes();
+        } catch (e) {
+          if (mounted) {
+            _showError('Could not read file: $e');
+          }
+          return;
         }
-      });
 
-      // Show PII detection results if any PII found
-      if (piiResult.hasPII) {
-        _showPIIDetectionDialog(piiResult);
+        // Perform PII detection
+        final piiResult = PIIDetector.detectPII(
+          file.path.split('/').last.split('\\').last,
+          fileBytes,
+        );
+
+        setState(() {
+          _selectedFile = file;
+          _piiDetection = piiResult;
+
+          // Auto-suggest high security if PII detected
+          if (piiResult.suggestHighSecurity) {
+            _highSecurity = true;
+          }
+        });
+
+        // Show PII detection results if any PII found
+        if (piiResult.hasPII && mounted) {
+          _showPIIDetectionDialog(piiResult);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        _showError('Error selecting file: $e');
       }
     }
-    */
   }
 
   void _configureSSS() async {
@@ -112,25 +115,16 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
   Future<void> _generateKeys() async {
     if (_highSecurity) {
       // Generate Shamir shares for high security mode
-
-      // Generate a random AES key
       final aesKey = ShamirSecretSharing.generateRandomSecret(32);
 
-      // Split into configured shares with configured threshold
       final shares = ShamirSecretSharing.split(
         secret: aesKey,
         threshold: _threshold,
         totalShares: _totalShares,
       );
 
-      // Store the generated shares and key for upload
-      _generatedShares = shares;
-      _generatedAESKey = aesKey;
-
-      // Convert shares to human-readable format
-      final shareStrings = shares
-          .map((share) => share.toHumanReadable())
-          .toList();
+      final shareStrings =
+          shares.map((share) => share.toHumanReadable()).toList();
 
       setState(() {
         _key1Controller.text = shareStrings[0];
@@ -140,7 +134,6 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
 
       _showKeysDialog(shareStrings);
     } else {
-      // Generate simple keys for legacy mode
       final keyService = await ref.read(keyProvider.future);
       final keys = keyService.generateKeys();
 
@@ -278,47 +271,45 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
             const SizedBox(height: 16),
 
             // Show detected PII types
-            ...piiResult.detections
-                .map(
-                  (detection) => Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.warning.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: AppColors.warning.withOpacity(0.3),
+            ...piiResult.detections.map(
+              (detection) => Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.warning.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: AppColors.warning.withOpacity(0.3),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      detection.type.icon,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            detection.type.displayName,
+                            style: AppTypography.labelCaps.copyWith(
+                              color: AppColors.warning,
+                            ),
+                          ),
+                          Text(
+                            detection.description,
+                            style: AppTypography.metadata,
+                          ),
+                        ],
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        Text(
-                          detection.type.icon,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                detection.type.displayName,
-                                style: AppTypography.labelCaps.copyWith(
-                                  color: AppColors.warning,
-                                ),
-                              ),
-                              Text(
-                                detection.description,
-                                style: AppTypography.metadata,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-                ,
+                  ],
+                ),
+              ),
+            ),
 
             const SizedBox(height: 16),
 
@@ -399,23 +390,21 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       if (_key1Controller.text.isEmpty ||
           _key2Controller.text.isEmpty ||
           _key3Controller.text.isEmpty) {
-        _showError('Please enter all required shares/keys');
+        _showError(
+            'Please generate and save your shares first, then tap SECURE UPLOAD');
         return;
       }
       keys = [
-        _key1Controller.text.toUpperCase(),
-        _key2Controller.text.toUpperCase(),
-        _key3Controller.text.toUpperCase(),
+        _key1Controller.text.trim(),
+        _key2Controller.text.trim(),
+        _key3Controller.text.trim(),
       ];
     }
 
     setState(() => _isUploading = true);
 
     try {
-      // Handle file upload
-      await ref
-          .read(fileControllerProvider)
-          .upload(
+      await ref.read(fileControllerProvider).upload(
             file: _selectedFile!,
             password: _passwordController.text,
             highSecurity: _highSecurity,
@@ -425,8 +414,9 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('File uploaded successfully'),
+            content: Text('✅ File encrypted and stored securely!'),
             backgroundColor: AppColors.success,
+            duration: Duration(seconds: 3),
           ),
         );
         context.pop();
@@ -434,7 +424,7 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
     } catch (e) {
       _showError(e.toString());
     } finally {
-      setState(() => _isUploading = false);
+      if (mounted) setState(() => _isUploading = false);
     }
   }
 
@@ -482,19 +472,30 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
                     const SizedBox(height: 16),
                     Text(
                       _selectedFile != null
-                          ? _selectedFile!.path
-                                .split('/')
-                                .last
-                                .split('\\')
-                                .last
+                          ? _selectedFile!.path.split('/').last.split('\\').last
                           : 'Tap to select file',
                       style: AppTypography.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                     if (_selectedFile != null) ...[
                       const SizedBox(height: 8),
+                      FutureBuilder<int>(
+                        future: _selectedFile!.length(),
+                        builder: (context, snapshot) {
+                          final size = snapshot.data ?? 0;
+                          final sizeStr = size > 1024 * 1024
+                              ? '${(size / (1024 * 1024)).toStringAsFixed(1)} MB'
+                              : '${(size / 1024).toStringAsFixed(1)} KB';
+                          return Text(
+                            'Size: $sizeStr  •  All file types supported',
+                            style: AppTypography.metadata,
+                          );
+                        },
+                      ),
+                    ] else ...[
+                      const SizedBox(height: 8),
                       const Text(
-                        'PDF, JPG, PNG supported',
+                        'PDF, Images, Documents, Videos & more',
                         style: AppTypography.metadata,
                       ),
                     ],

@@ -17,13 +17,21 @@ class KeyService {
     return service;
   }
 
+  /// Empty/placeholder instance used while KeyService is loading
+  static KeyService empty() {
+    final service = KeyService._();
+    // _box will be assigned lazily - this instance should not be used for real ops
+    return service;
+  }
+
   /// Generate 3 random keys (8 characters each, alphanumeric)
   List<String> generateKeys() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final random = Random.secure();
-    
+
     return List.generate(3, (_) {
-      return List.generate(8, (_) => chars[random.nextInt(chars.length)]).join();
+      return List.generate(8, (_) => chars[random.nextInt(chars.length)])
+          .join();
     });
   }
 
@@ -42,7 +50,7 @@ class KeyService {
 
     final keyHashes = keys.map((k) => _hashKey(k)).toList();
     final record = KeyRecord(fileId: fileId, keyHashes: keyHashes);
-    
+
     await _box.put(
       'keys_$fileId',
       jsonEncode(record.toJson()),
@@ -59,7 +67,7 @@ class KeyService {
 
     // All hashes must match
     if (record.keyHashes.length != inputHashes.length) return false;
-    
+
     for (int i = 0; i < record.keyHashes.length; i++) {
       if (record.keyHashes[i] != inputHashes[i]) return false;
     }
@@ -90,13 +98,14 @@ class KeyService {
   }
 
   /// Store Shamir shares for a file
-  Future<void> storeShamirShares(String fileId, List<ShamirShare> shares, int threshold) async {
+  Future<void> storeShamirShares(
+      String fileId, List<ShamirShare> shares, int threshold) async {
     final shareData = {
       'threshold': threshold,
       'totalShares': shares.length,
       'shares': shares.map((s) => s.toJson()).toList(),
     };
-    
+
     await _box.put(
       'shamir_$fileId',
       jsonEncode(shareData),
@@ -112,7 +121,7 @@ class KeyService {
 
     final shareData = jsonDecode(storedData);
     final sharesList = shareData['shares'] as List;
-    
+
     return sharesList.map((s) => ShamirShare.fromJson(s)).toList();
   }
 
