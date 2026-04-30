@@ -190,7 +190,7 @@ class BackupService {
         
         try {
           final encryptedData = await _storage.readEncrypted(meta.id);
-          totalSize += encryptedData.cipher.length as int;
+          totalSize += encryptedData.cipher.length;
         } catch (e) {
           // Skip files that can't be read
         }
