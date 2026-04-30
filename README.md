@@ -314,9 +314,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### 📲 **Download APK**
 
-**Latest Version**: v1.0.0 | **Size**: 22.1 MB | **Android**: 5.0+
+**Latest Version**: v1.0.1 | **Size**: 53.2 MB | **Android**: 5.0+
 
 [![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
+
+**✨ NEW in v1.0.1:**
+- ✅ **File picker now working!** Upload ANY file type (PDF, images, documents, videos, etc.)
+- ✅ Storage permissions enabled - app will request access on first file upload
+- ✅ Fixed build compatibility issues
+- ✅ Improved stability and performance
 
 ### 🔗 **Direct Download Link**
 
@@ -342,6 +348,8 @@ https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-
 - ✅ Military-grade AES-256 encryption
 - ✅ Dual security (Master Password + PIN)
 - ✅ Shamir's Secret Sharing
+- ✅ **Working file picker** - Upload any file type
+- ✅ Storage permissions for file access
 - ✅ Google Play Protect compatible (API 34)
 
 ---
@@ -391,5 +399,5 @@ This application is provided "as is" without warranty of any kind. While we impl
 
 **Made with ❤️ and 🔐 by Kathirvel P**
 
-**Version**: 1.0.0  
-**Last Updated**: April 27, 2026
+**Version**: 1.0.1 (File Picker Working!)  
+**Last Updated**: April 30, 2026
