@@ -1,0 +1,48 @@
+═══════════════════════════════════════════════════════════════
+  QUICK STEPS TO UPLOAD NEW APK TO GITHUB RELEASES
+═══════════════════════════════════════════════════════════════
+
+CURRENT SITUATION:
+  ❌ Old APK on GitHub: 23 MB (file picker broken)
+  ✅ New APK ready: 53.2 MB (file picker working!)
+  📁 Location: build\app\outputs\flutter-apk\app-release.apk
+
+═══════════════════════════════════════════════════════════════
+
+SIMPLE 5-STEP UPLOAD:
+
+1. GO TO RELEASES PAGE
+   → Open: https://github.com/kathirvel-p22/Secure-PII_Wallet/releases
+   → Click "Draft a new release"
+
+2. FILL IN RELEASE INFO
+   → Tag: v1.0.1
+   → Title: v1.0.1 - File Picker Working!
+   → Description: Copy from UPLOAD_NEW_RELEASE.md
+
+3. UPLOAD APK FILE
+   → Click "Attach files"
+   → Navigate to: C:\Users\lapto\Downloads\Secure-PII\secure_pii_wallet\build\app\outputs\flutter-apk\
+   → Select: app-release.apk (53.2 MB)
+   → Wait for upload to complete
+
+4. PUBLISH
+   → Check "Set as the latest release"
+   → Click "Publish release"
+
+5. VERIFY
+   → Test download link: https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk
+   → Should download 53.2 MB APK
+
+═══════════════════════════════════════════════════════════════
+
+AFTER PUBLISHING:
+  ✅ Download links in README automatically work
+  ✅ Users get the working version (53.2 MB)
+  ✅ File picker works for everyone!
+
+═══════════════════════════════════════════════════════════════
+
+DETAILED GUIDE: See UPLOAD_NEW_RELEASE.md
+
+═══════════════════════════════════════════════════════════════
