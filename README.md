@@ -6,6 +6,22 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-blue.svg)](https://flutter.dev)
 
+---
+
+## 🚀 Quick Start - Download Now!
+
+**Want to use the app right away?** 
+
+👉 **[DOWNLOAD APK FOR ANDROID](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)** 👈
+
+**Version**: 1.0.1 | **Size**: 53.2 MB | **Android**: 5.0+
+
+**New in v1.0.1**: File picker working! Upload any file type (PDF, images, videos, documents, etc.)
+
+📖 [Full Installation Guide](#-download--install) | 🧪 [Testing Guide](FILE_PICKER_TEST_GUIDE.md)
+
+---
+
 ## 📱 App Icon
 
 The app features a custom **Secure PII Wallet** logo designed for easy recognition and professional appearance on your device.
@@ -312,11 +328,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📥 Download & Install
 
-### 📲 **Download APK**
+### 📲 **Download APK for Android**
 
 **Latest Version**: v1.0.1 | **Size**: 53.2 MB | **Android**: 5.0+
-
-[![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
 
 **✨ NEW in v1.0.1:**
 - ✅ **File picker now working!** Upload ANY file type (PDF, images, documents, videos, etc.)
@@ -324,22 +338,59 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ Fixed build compatibility issues
 - ✅ Improved stability and performance
 
-### 🔗 **Direct Download Link**
+---
 
+### 🔗 **Direct Download Links**
+
+#### Option 1: Click to Download (Recommended)
+👉 **[DOWNLOAD APK NOW](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)** 👈
+
+#### Option 2: Copy Link to Browser
 ```
 https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk
 ```
 
-**Or click here**: [Download app-release.apk](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
+#### Option 3: Badge Download
+[![Download APK](https://img.shields.io/badge/Download-APK-success?style=for-the-badge&logo=android)](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)
+
+---
 
 ### 📱 **Installation Steps**
 
-1. **Download** the APK file using the link above
-2. **Open** the downloaded file on your Android phone
-3. **Allow** installation from unknown sources if prompted:
-   - Settings → Security → Unknown Sources → Enable
-   - Or Settings → Apps → Install Unknown Apps → Enable for your browser
-4. **Install** and start using the app!
+#### For Mobile Users (Direct on Phone):
+1. **Open this link on your Android phone**: 
+   - Tap here: **[DOWNLOAD APK](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)**
+   - Or copy this link to your phone's browser:
+     ```
+     https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk
+     ```
+
+2. **Download will start automatically**
+   - File name: `app-release.apk`
+   - Size: 53.2 MB
+   - Wait for download to complete
+
+3. **Open the downloaded APK file**
+   - Tap on the notification, or
+   - Go to Downloads folder and tap the file
+
+4. **Allow installation from unknown sources** (if prompted):
+   - **Android 8.0+**: Settings → Apps → Install Unknown Apps → Enable for your browser
+   - **Android 7.0 and below**: Settings → Security → Unknown Sources → Enable
+
+5. **Tap "Install"** and wait for installation to complete
+
+6. **Open the app** and start securing your files!
+
+#### For Desktop Users (Download then Transfer):
+1. **Download** the APK file on your computer using the link above
+2. **Transfer** to your Android phone via:
+   - USB cable
+   - Email attachment
+   - Cloud storage (Google Drive, Dropbox)
+   - Messaging app (WhatsApp, Telegram)
+3. **Open** the APK file on your phone
+4. **Follow steps 4-6** from mobile instructions above
 
 **Minimum Requirements**: Android 5.0 (Lollipop) or higher
 
