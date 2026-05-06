@@ -161,80 +161,87 @@ class _UploadScreenState extends ConsumerState<UploadScreen> {
           children: [
             const Icon(Icons.security, color: AppColors.warning),
             const SizedBox(width: 8),
-            Text(
-              isSSS ? 'SHAMIR SECRET SHARES' : 'SECURITY KEYS',
-              style: AppTypography.h2,
+            Expanded(
+              child: Text(
+                isSSS ? 'SHAMIR SECRET SHARES' : 'SECURITY KEYS',
+                style: AppTypography.h2,
+              ),
             ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              isSSS
-                  ? 'Your file will be protected using Shamir\'s Secret Sharing. Save these shares securely - you need $threshold out of $totalShares shares to access your file.'
-                  : 'Your file will be protected with these security keys. Save them securely - you need all keys to access your file.',
-              style: AppTypography.body.copyWith(color: AppColors.warning),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              isSSS ? 'CRYPTOGRAPHIC SHARES:' : 'SECURITY KEYS:',
-              style: AppTypography.labelCaps,
-            ),
-            const SizedBox(height: 8),
-            ...keys.asMap().entries.map((entry) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Container(
+        content: SizedBox(
+          width: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  isSSS
+                      ? 'Your file will be protected using Shamir\'s Secret Sharing. Save these shares securely - you need $threshold out of $totalShares shares to access your file.'
+                      : 'Your file will be protected with these security keys. Save them securely - you need all keys to access your file.',
+                  style: AppTypography.body.copyWith(color: AppColors.warning),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  isSSS ? 'CRYPTOGRAPHIC SHARES:' : 'SECURITY KEYS:',
+                  style: AppTypography.labelCaps,
+                ),
+                const SizedBox(height: 8),
+                ...keys.asMap().entries.map((entry) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppColors.bg,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: AppColors.neon),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isSSS
+                                ? 'Share ${entry.key + 1}:'
+                                : 'Key ${entry.key + 1}:',
+                            style: AppTypography.label,
+                          ),
+                          const SizedBox(height: 4),
+                          SelectableText(
+                            entry.value,
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: AppColors.neon,
+                              fontFamily: 'monospace',
+                              fontSize: isSSS ? 10 : 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+                const SizedBox(height: 16),
+                Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.bg,
+                    color: AppColors.error.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.neon),
+                    border: Border.all(color: AppColors.error),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        isSSS
-                            ? 'Share ${entry.key + 1}:'
-                            : 'Key ${entry.key + 1}:',
-                        style: AppTypography.label,
-                      ),
-                      const SizedBox(height: 4),
-                      SelectableText(
-                        entry.value,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppColors.neon,
-                          fontFamily: 'monospace',
-                          fontSize: isSSS ? 10 : 12,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    isSSS
+                        ? '⚠️ CRITICAL: If you lose these shares, your file cannot be recovered. Store them in multiple secure locations.'
+                        : '⚠️ CRITICAL: If you lose these keys, your file cannot be recovered. Store them securely.',
+                    style: AppTypography.metadata.copyWith(
+                      color: AppColors.error,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              );
-            }),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.error.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.error),
-              ),
-              child: Text(
-                isSSS
-                    ? '⚠️ CRITICAL: If you lose these shares, your file cannot be recovered. Store them in multiple secure locations.'
-                    : '⚠️ CRITICAL: If you lose these keys, your file cannot be recovered. Store them securely.',
-                style: AppTypography.metadata.copyWith(
-                  color: AppColors.error,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
         actions: [
           ElevatedButton(

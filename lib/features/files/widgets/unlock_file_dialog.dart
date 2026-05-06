@@ -143,10 +143,14 @@ class _UnlockFileDialogState extends ConsumerState<UnlockFileDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final maxDialogHeight = screenHeight * 0.8; // Use 80% of screen height max
+    
     return AlertDialog(
       backgroundColor: AppColors.card,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -195,106 +199,117 @@ class _UnlockFileDialogState extends ConsumerState<UnlockFileDialog> {
                 ),
               ),
             )
-          : SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Password
-                  const Text('PASSWORD', style: AppTypography.labelCaps),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    style: AppTypography.secureInput,
-                    decoration: InputDecoration(
-                      hintText: 'Enter password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+          : SizedBox(
+              width: double.maxFinite,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: maxDialogHeight - 200, // Reserve space for title and actions
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Password
+                      const Text('PASSWORD', style: AppTypography.labelCaps),
+                      const SizedBox(height: 8),
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: _obscurePassword,
+                        style: AppTypography.secureInput,
+                        decoration: InputDecoration(
+                          hintText: 'Enter password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                            ),
+                            onPressed: () =>
+                                setState(() => _obscurePassword = !_obscurePassword),
+                          ),
                         ),
-                        onPressed: () =>
-                            setState(() => _obscurePassword = !_obscurePassword),
+                        onSubmitted: widget.file.isHighSecurity ? null : (_) => _unlock(),
                       ),
-                    ),
-                    onSubmitted: widget.file.isHighSecurity ? null : (_) => _unlock(),
-                  ),
 
-                  // Keys/Shares (High Security)
-                  if (widget.file.isHighSecurity && _threshold != null) ...[
-                    const SizedBox(height: 16),
-                    Text(
-                      widget.file.isShamirMode ? 'SHAMIR SHARES' : 'SECURITY KEYS',
-                      style: AppTypography.labelCaps,
-                    ),
-                    const SizedBox(height: 8),
-                    if (widget.file.isShamirMode) ...[
-                      Text(
-                        'Enter any $_threshold or more of your saved shares to unlock this file',
-                        style: AppTypography.metadata.copyWith(
-                          color: AppColors.warning,
+                      // Keys/Shares (High Security)
+                      if (widget.file.isHighSecurity && _threshold != null) ...[
+                        const SizedBox(height: 16),
+                        Text(
+                          widget.file.isShamirMode ? 'SHAMIR SHARES' : 'SECURITY KEYS',
+                          style: AppTypography.labelCaps,
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Shares can be entered in any order. You only need $_threshold shares to unlock.',
-                        style: AppTypography.metadata.copyWith(
-                          color: AppColors.textSecondary,
-                          fontSize: 11,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Copy and paste your shares exactly as shown during upload:',
-                        style: AppTypography.metadata.copyWith(
-                          color: AppColors.textSecondary,
-                          fontSize: 11,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: AppColors.bg,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: AppColors.divider),
-                        ),
-                        child: Text(
-                          'Example: 1-79296670353c4c967e23388e6a3c31d38ee7cd53305730c947e5e0051026de23',
-                          style: AppTypography.metadata.copyWith(
-                            color: AppColors.neon,
-                            fontFamily: 'monospace',
-                            fontSize: 9,
+                        const SizedBox(height: 8),
+                        if (widget.file.isShamirMode) ...[
+                          Text(
+                            'Enter any $_threshold or more of your saved shares to unlock this file',
+                            style: AppTypography.metadata.copyWith(
+                              color: AppColors.warning,
+                            ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Shares can be entered in any order. You only need $_threshold shares to unlock.',
+                            style: AppTypography.metadata.copyWith(
+                              color: AppColors.textSecondary,
+                              fontSize: 11,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Copy and paste your shares exactly as shown during upload:',
+                            style: AppTypography.metadata.copyWith(
+                              color: AppColors.textSecondary,
+                              fontSize: 11,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: AppColors.bg,
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: AppColors.divider),
+                            ),
+                            child: Text(
+                              'Example: 1-79296670353c4c967e23388e6a3c31d38ee7cd53305730c947e5e0051026de23',
+                              style: AppTypography.metadata.copyWith(
+                                color: AppColors.neon,
+                                fontFamily: 'monospace',
+                                fontSize: 9,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                        ],
+                        
+                        // Dynamic share/key input fields
+                        ...List.generate(_shareControllers.length, (index) {
+                          final isRequired = index < _threshold!;
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: index < _shareControllers.length - 1 ? 12 : 0),
+                            child: TextField(
+                              controller: _shareControllers[index],
+                              style: AppTypography.secureInput.copyWith(fontSize: 12),
+                              maxLines: widget.file.isShamirMode ? 2 : 1,
+                              decoration: InputDecoration(
+                                labelText: widget.file.isShamirMode 
+                                    ? 'Share ${index + 1}${isRequired ? ' *' : ' (optional)'}'
+                                    : 'Key ${index + 1}',
+                                hintText: widget.file.isShamirMode
+                                    ? 'Paste share ${index + 1} here'
+                                    : 'Enter key ${index + 1}',
+                                helperText: widget.file.isShamirMode && !isRequired
+                                    ? 'Extra shares for redundancy'
+                                    : null,
+                                helperMaxLines: 2,
+                              ),
+                            ),
+                          );
+                        }),
+                        const SizedBox(height: 8),
+                      ],
                     ],
-                    
-                    // Dynamic share/key input fields
-                    ...List.generate(_shareControllers.length, (index) {
-                      final isRequired = index < _threshold!;
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: index < _shareControllers.length - 1 ? 8 : 0),
-                        child: TextField(
-                          controller: _shareControllers[index],
-                          style: AppTypography.secureInput.copyWith(fontSize: 12),
-                          decoration: InputDecoration(
-                            labelText: widget.file.isShamirMode 
-                                ? 'Share ${index + 1}${isRequired ? ' *' : ' (optional)'}'
-                                : 'Key ${index + 1}',
-                            hintText: widget.file.isShamirMode
-                                ? 'Paste share ${index + 1} here'
-                                : 'Enter key ${index + 1}',
-                            helperText: widget.file.isShamirMode && !isRequired
-                                ? 'Extra shares for redundancy'
-                                : null,
-                          ),
-                        ),
-                      );
-                    }),
-                  ],
-                ],
+                  ),
+                ),
               ),
             ),
       actions: [

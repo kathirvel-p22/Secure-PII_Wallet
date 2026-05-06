@@ -115,130 +115,143 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              const SizedBox(height: 32),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top - 
+                         MediaQuery.of(context).padding.bottom - 
+                         kToolbarHeight - 48,
+            ),
+            child: IntrinsicHeight(
+              child: Column(
+                children: [
+                  const SizedBox(height: 32),
 
-              // Icon
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: AppColors.neon.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(40),
-                  border: Border.all(color: AppColors.neon, width: 2),
-                ),
-                child: const Icon(
-                  Icons.lock_outline,
-                  size: 40,
-                  color: AppColors.neon,
-                ),
-              ),
-
-              const SizedBox(height: 32),
-
-              // Title and description
-              Text(
-                _isConfirming ? 'Confirm Your PIN' : 'Create Your PIN',
-                style: AppTypography.h1.copyWith(
-                  color: AppColors.neon,
-                  fontSize: 24,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 16),
-
-              Text(
-                _isConfirming
-                    ? 'Enter your PIN again to confirm'
-                    : 'Choose a $_selectedLength-digit PIN to secure your app',
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 48),
-
-              // PIN length selector (only show when not confirming)
-              if (!_isConfirming) ...[
-                const Text(
-                  'PIN LENGTH',
-                  style: AppTypography.labelCaps,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildLengthOption(4),
+                  // Icon
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: AppColors.neon.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(40),
+                      border: Border.all(color: AppColors.neon, width: 2),
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _buildLengthOption(6),
+                    child: const Icon(
+                      Icons.lock_outline,
+                      size: 40,
+                      color: AppColors.neon,
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Title and description
+                  Text(
+                    _isConfirming ? 'Confirm Your PIN' : 'Create Your PIN',
+                    style: AppTypography.h1.copyWith(
+                      color: AppColors.neon,
+                      fontSize: 24,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  Text(
+                    _isConfirming
+                        ? 'Enter your PIN again to confirm'
+                        : 'Choose a $_selectedLength-digit PIN to secure your app',
+                    style: AppTypography.body.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // PIN length selector (only show when not confirming)
+                  if (!_isConfirming) ...[
+                    const Text(
+                      'PIN LENGTH',
+                      style: AppTypography.labelCaps,
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildLengthOption(4),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _buildLengthOption(6),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+
+                  // PIN input
+                  PinInput(
+                    key: ValueKey('${_selectedLength}_$_isConfirming'),
+                    length: _selectedLength,
+                    onCompleted: _onPinCompleted,
+                    enabled: !_isLoading,
+                    errorText: _errorMessage,
+                  ),
+
+                  const Spacer(),
+
+                  // Loading indicator
+                  if (_isLoading) ...[
+                    const SizedBox(height: 24),
+                    const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.neon),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Setting up your PIN...',
+                      style: AppTypography.body.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ],
-                ),
-                const SizedBox(height: 48),
-              ],
 
-              // PIN input
-              PinInput(
-                key: ValueKey('${_selectedLength}_$_isConfirming'),
-                length: _selectedLength,
-                onCompleted: _onPinCompleted,
-                enabled: !_isLoading,
-                errorText: _errorMessage,
-              ),
-
-              const Spacer(),
-
-              // Loading indicator
-              if (_isLoading) ...[
-                const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.neon),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Setting up your PIN...',
-                  style: AppTypography.body.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-
-              // Security note
-              if (!_isLoading) ...[
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppColors.card,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.divider),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.security,
-                        color: AppColors.neon,
-                        size: 20,
+                  // Security note
+                  if (!_isLoading) ...[
+                    const SizedBox(height: 24),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.card,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColors.divider),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          'Your PIN is encrypted and stored securely on your device. We cannot recover it if forgotten.',
-                          style: AppTypography.metadata.copyWith(
-                            color: AppColors.textSecondary,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.security,
+                            color: AppColors.neon,
+                            size: 20,
                           ),
-                        ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Your PIN is encrypted and stored securely on your device. We cannot recover it if forgotten.',
+                              style: AppTypography.metadata.copyWith(
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ],
+                    ),
+                  ],
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
           ),
         ),
       ),
