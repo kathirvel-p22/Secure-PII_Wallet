@@ -29,6 +29,10 @@ dependencies:
   # File Picker - upgraded to latest for Flutter 3.41+
   file_picker: ^8.1.6
   
+  # AI Chatbot - Google Gemini
+  google_generative_ai: ^0.2.2
+  http: ^1.1.0
+  
   # Utils
   uuid: ^4.4.0
   intl: ^0.19.0
