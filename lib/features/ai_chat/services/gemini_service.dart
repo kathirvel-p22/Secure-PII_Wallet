@@ -65,6 +65,6 @@ Be helpful, concise, and security-focused. Never ask for or store sensitive user
 
   /// Get chat history
   List<Content> getChatHistory() {
-    return _chat.history;
+    return _chat.history.toList();
   }
 }
