@@ -12,11 +12,17 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 
 **Want to use the app right away?** 
 
-👉 **[DOWNLOAD APK FOR ANDROID](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-release.apk)** 👈
+👉 **[DOWNLOAD APK FOR ANDROID](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-debug.apk)** 👈
 
-**Version**: 1.0.1 | **Size**: 53.2 MB | **Android**: 5.0+
+**Version**: 1.0.3 | **Size**: 167.6 MB | **Android**: 5.0+
 
-**New in v1.0.2-debug**: File picker working! Upload any file type (PDF, images, videos, documents, etc.) - **Installs without errors!**
+**✨ NEW in v1.0.3:**
+- 🤖 **SecureAI Chatbot!** Intelligent assistant powered by Google Gemini
+- ✅ **No pixel overflow errors!** Fixed all layout issues  
+- 📱 **App renamed to "Secure Wallet"** - cleaner branding
+- 🎯 **4-tab navigation** - Dashboard, SecureAI, Security, Settings
+- 📁 **File picker working!** Upload ANY file type
+- ✅ **Installs without errors!** Debug build works perfectly
 
 📖 [Full Installation Guide](#-download--install) | 🧪 [Testing Guide](FILE_PICKER_TEST_GUIDE.md)
 
@@ -31,6 +37,13 @@ The app features a custom **Secure PII Wallet** logo designed for easy recogniti
 [Screenshots will be added here]
 
 ## ✨ Features
+
+### 🤖 SecureAI Assistant (NEW!)
+- **Intelligent Chatbot**: Powered by Google Gemini AI
+- **Security Guidance**: Get help with encryption and privacy questions
+- **App Support**: Learn about features and best practices
+- **24/7 Available**: Always ready to assist you
+- **Beautiful Interface**: Modern chat UI with gradient design
 
 ### 🛡️ Dual Security System
 - **Master Password**: Strong password (10+ characters) for critical operations
@@ -330,16 +343,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### 📲 **Download APK for Android**
 
-**Latest Version**: v1.0.2-debug | **Size**: 146.2 MB | **Android**: 5.0+
+**Latest Version**: v1.0.3 | **Size**: 167.6 MB | **Android**: 5.0+
 
-**✨ NEW in v1.0.2:**
-- ✅ **No installation errors!** Debug build installs successfully on all devices
-- ✅ **File picker fully working!** Upload ANY file type (PDF, images, documents, videos, etc.)
-- ✅ **Storage permissions enabled** - App properly requests file access
-- ✅ **Confirmed stable** - Tested and working by users
-- ✅ **All features functional** - Encryption, SSS, PII detection, etc.
+**✨ NEW in v1.0.3:**
+- 🤖 **SecureAI Chatbot!** Intelligent assistant powered by Google Gemini
+- ✅ **No pixel overflow errors!** Fixed all layout issues
+- 📱 **App renamed to "Secure Wallet"** - cleaner branding
+- 🎯 **4-tab navigation** - Dashboard, SecureAI, Security, Settings
+- 📁 **File picker working!** Upload ANY file type
+- ✅ **No installation errors!** Debug build installs successfully
+- 🔐 **All security features functional** - Encryption, SSS, PII detection
 
-**Note**: This is a debug build (larger size) but installs without any errors and works perfectly!
+**Note**: This is a debug build (larger size due to AI features) but installs without any errors and works perfectly!
 
 ---
 
@@ -370,7 +385,7 @@ https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-
 
 2. **Download will start automatically**
    - File name: `app-debug.apk`
-   - Size: 146.2 MB (larger but installs without errors!)
+   - Size: 167.6 MB (includes AI chatbot features)
    - Wait for download to complete
 
 3. **Open the downloaded APK file**
@@ -400,12 +415,14 @@ https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-
 **✅ This version installs without any errors and has working file picker!**
 
 ### ✨ **What's Included**
-- ✅ Custom Secure PII Wallet logo
+- 🤖 **SecureAI Chatbot** - Intelligent assistant powered by Google Gemini
+- ✅ Custom Secure Wallet logo
 - ✅ Military-grade AES-256 encryption
 - ✅ Dual security (Master Password + PIN)
 - ✅ Shamir's Secret Sharing
 - ✅ **Working file picker** - Upload any file type
 - ✅ **No installation errors** - Debug build installs successfully
+- ✅ **No pixel overflow issues** - All layouts fixed
 - ✅ Storage permissions for file access
 - ✅ Google Play Protect compatible (API 34)
 - ✅ **Confirmed working** by users
@@ -457,5 +474,5 @@ This application is provided "as is" without warranty of any kind. While we impl
 
 **Made with ❤️ and 🔐 by Kathirvel P**
 
-**Version**: 1.0.2-debug (Working APK - No Installation Errors!)  
+**Version**: 1.0.3 (SecureAI Chatbot + Pixel Fixes!)  
 **Last Updated**: April 30, 2026
