@@ -61,7 +61,7 @@ class _SecureAIScreenState extends ConsumerState<SecureAIScreen> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   colors: [AppColors.neon, AppColors.accent],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -195,7 +195,7 @@ class _SecureAIScreenState extends ConsumerState<SecureAIScreen> {
                     Container(
                       decoration: BoxDecoration(
                         gradient: _isComposing
-                            ? LinearGradient(
+                            ? const LinearGradient(
                                 colors: [AppColors.neon, AppColors.accent],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -276,7 +276,7 @@ class _SecureAIScreenState extends ConsumerState<SecureAIScreen> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                     height: 16,
                     child: CircularProgressIndicator(
@@ -321,7 +321,7 @@ class _SecureAIScreenState extends ConsumerState<SecureAIScreen> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     gradient: message.isUser
-                        ? LinearGradient(
+                        ? const LinearGradient(
                             colors: [AppColors.neon, AppColors.accent],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -372,12 +372,12 @@ class _SecureAIScreenState extends ConsumerState<SecureAIScreen> {
       height: 32,
       decoration: BoxDecoration(
         gradient: isUser
-            ? LinearGradient(
+            ? const LinearGradient(
                 colors: [AppColors.accent, AppColors.neon],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
-            : LinearGradient(
+            : const LinearGradient(
                 colors: [AppColors.neon, AppColors.accent],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
