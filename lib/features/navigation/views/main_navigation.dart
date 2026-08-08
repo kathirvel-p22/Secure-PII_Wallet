@@ -48,23 +48,16 @@ class MainNavigation extends ConsumerWidget {
                 ),
                 _buildNavItem(
                   context,
-                  icon: Icons.psychology_rounded,
-                  label: 'SecureAI',
-                  index: 1,
-                  currentIndex: currentIndex,
-                ),
-                _buildNavItem(
-                  context,
                   icon: Icons.security_rounded,
                   label: 'Security',
-                  index: 2,
+                  index: 1,
                   currentIndex: currentIndex,
                 ),
                 _buildNavItem(
                   context,
                   icon: Icons.settings_rounded,
                   label: 'Settings',
-                  index: 3,
+                  index: 2,
                   currentIndex: currentIndex,
                 ),
               ],
@@ -121,12 +114,10 @@ class MainNavigation extends ConsumerWidget {
   int _getIndexFromLocation(String location) {
     if (location.startsWith('/dashboard') || location == '/') {
       return 0;
-    } else if (location.startsWith('/secure-ai')) {
-      return 1;
     } else if (location.startsWith('/security')) {
-      return 2;
+      return 1;
     } else if (location.startsWith('/settings')) {
-      return 3;
+      return 2;
     }
     return 0;
   }
@@ -137,12 +128,9 @@ class MainNavigation extends ConsumerWidget {
         context.go('/dashboard');
         break;
       case 1:
-        context.go('/secure-ai');
-        break;
-      case 2:
         context.go('/security');
         break;
-      case 3:
+      case 2:
         context.go('/settings');
         break;
     }

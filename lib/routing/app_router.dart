@@ -9,7 +9,6 @@ import '../features/pin/views/pin_unlock_screen.dart';
 import '../features/files/views/dashboard_screen.dart';
 import '../features/files/views/upload_screen.dart';
 import '../features/files/views/file_viewer_screen.dart';
-import '../features/ai_chat/views/secure_ai_screen.dart';
 import '../features/security/views/security_screen.dart';
 import '../features/settings/views/settings_screen.dart';
 import '../features/logs/views/access_logs_screen.dart';
@@ -108,10 +107,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/dashboard',
             builder: (context, state) => const DashboardScreen(),
-          ),
-          GoRoute(
-            path: '/secure-ai',
-            builder: (context, state) => const SecureAIScreen(),
           ),
           GoRoute(
             path: '/security',

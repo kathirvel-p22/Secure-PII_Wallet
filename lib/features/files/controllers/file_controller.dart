@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/security/access_logger.dart';
+import '../../../core/database/database_service.dart';
+import '../../../core/database/models/file_metadata.dart';
 import '../../../providers/providers.dart';
 import '../models/file_meta.dart';
 
@@ -19,6 +21,7 @@ class FileController {
     List<String>? keys,
   }) async {
     final security = ref.read(securityProvider);
+    final dbService = ref.read(databaseServiceProvider);
 
     // Prepare and store (includes all validation and encryption)
     final meta = await security.prepareAndStore(
@@ -30,6 +33,36 @@ class FileController {
 
     // Update state
     ref.read(filesProvider.notifier).addFile(meta);
+
+    // Store metadata in database ONLY for Normal Security files (not SSS)
+    if (!highSecurity) {
+      try {
+        final fileStats = await file.stat();
+        final fileName = file.path.split('/').last.split('\\').last;
+        final fileType = fileName.split('.').last;
+        
+        final fileMetadata = FileMetadata(
+          id: meta.id,
+          fileName: meta.name,
+          filePath: meta.path,
+          fileSize: fileStats.size,
+          fileType: fileType,
+          category: FileMetadata.detectCategory(fileType),
+          tags: [], // Can be added later by user
+          description: null,
+          uploadedAt: DateTime.now(),
+          lastAccessedAt: DateTime.now(),
+          accessCount: 0,
+          isFavorite: false,
+          isSecurityModeSSS: false, // This is Normal Security
+        );
+
+        await dbService.addFile(fileMetadata);
+      } catch (e) {
+        // Log error but don't fail the upload
+        print('Warning: Could not save file metadata to database: $e');
+      }
+    }
 
     return meta;
   }
@@ -43,6 +76,7 @@ class FileController {
     final security = ref.read(securityProvider);
     final storage = ref.read(storageProvider);
     final logger = AccessLogger(storage);
+    final dbService = ref.read(databaseServiceProvider);
 
     // Get file metadata for logging
     final meta = await storage.getMetaById(fileId);
@@ -59,6 +93,15 @@ class FileController {
         accessType: AccessType.view,
         success: true,
       );
+
+      // Update access info in database (only for Normal Security files)
+      if (meta != null && !meta.isHighSecurity) {
+        try {
+          await dbService.recordFileAccess(fileId);
+        } catch (e) {
+          print('Warning: Could not update file access info: $e');
+        }
+      }
 
       return fileBytes;
     } catch (e) {
@@ -79,6 +122,7 @@ class FileController {
     final security = ref.read(securityProvider);
     final storage = ref.read(storageProvider);
     final logger = AccessLogger(storage);
+    final dbService = ref.read(databaseServiceProvider);
 
     // Get file metadata for logging
     final meta = await storage.getMetaById(fileId);
@@ -95,6 +139,15 @@ class FileController {
         accessType: AccessType.delete,
         success: true,
       );
+
+      // Delete from database (only for Normal Security files)
+      if (meta != null && !meta.isHighSecurity) {
+        try {
+          await dbService.deleteFile(fileId);
+        } catch (e) {
+          print('Warning: Could not delete file metadata from database: $e');
+        }
+      }
 
       // Update state
       ref.read(filesProvider.notifier).removeFile(fileId);
