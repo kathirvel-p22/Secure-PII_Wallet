@@ -703,6 +703,7 @@ Filters:
 
 ### Q3 2026 (July - September)
 - 📁 v1.2.0: File Categories + Preview + Search
+- 📁 v1.2.0: File Categories + Preview + Search
 
 ### Q4 2026 (October - December)
 - 🌐 v1.3.0: Cloud Backup + File Sharing

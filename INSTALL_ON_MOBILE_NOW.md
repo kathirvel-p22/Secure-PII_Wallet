@@ -9,7 +9,18 @@
 - 📁 **File picker working** - Upload any file type
 - ✅ **Installs without errors** - Debug build works perfectly
 
-**APK Size**: 167.6 MB  
+**Latest Version**: v1.0.3 | **Size**: 146.4 MB | **Android**: 5.0+
+
+**✨ NEW in v1.0.3:**
+- 🤖 **SecureAI Chatbot** - Intelligent assistant powered by Google Gemini
+- 📋 **Feature Roadmap** - 30+ planned features for future releases
+- ✅ **No pixel overflow errors** - All layout issues fixed
+- 📱 **App renamed to "Secure Wallet"** - Cleaner branding
+- 🎯 **4-tab navigation** - Dashboard, SecureAI, Security, Settings
+- 📁 **File picker working** - Upload any file type
+- ✅ **Installs without errors** - Debug build works perfectly
+
+**APK Size**: 146.4 MB  
 **APK Location**: `build\app\outputs\flutter-apk\app-debug.apk`
 
 ---
@@ -34,6 +45,7 @@
 
 **Major Features:**
 - 🤖 **SecureAI Chatbot** - Intelligent assistant powered by Google Gemini AI
+- 📋 **Feature Roadmap** - Comprehensive roadmap with 30+ planned features
 - ✅ **No pixel overflow errors** - Fixed all layout issues (PIN setup, file dialogs)
 - 📱 **App renamed to "Secure Wallet"** - Cleaner, more professional branding
 - 🎯 **4-tab navigation** - Dashboard, SecureAI, Security, Settings
@@ -47,7 +59,7 @@
 ### 📦 APK Information
 
 - **File**: app-debug.apk
-- **Size**: 167.6 MB
+- **Size**: 146.4 MB
 - **Android**: 5.0 (Lollipop) or higher
 - **Architecture**: Universal (ARM, ARM64, x86, x86_64)
 
@@ -204,7 +216,7 @@ After installation, verify:
 | **Navigation Tabs** | 3 tabs | ✅ 4 tabs |
 | **File Picker** | ✅ Working | ✅ Working |
 | **Installation** | ✅ Works | ✅ Works |
-| **APK Size** | 146.2 MB | 167.6 MB |
+| **APK Size** | 146.2 MB | 146.4 MB |
 
 ---
 

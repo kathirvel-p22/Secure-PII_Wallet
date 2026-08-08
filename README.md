@@ -14,17 +14,18 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 
 👉 **[DOWNLOAD APK FOR ANDROID](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-debug.apk)** 👈
 
-**Version**: 1.0.3 | **Size**: 167.6 MB | **Android**: 5.0+
+**Version**: 1.0.3 | **Size**: 146.4 MB | **Android**: 5.0+
 
 **✨ NEW in v1.0.3:**
 - 🤖 **SecureAI Chatbot!** Intelligent assistant powered by Google Gemini
+- 📋 **Feature Roadmap!** 30+ planned features for future releases
 - ✅ **No pixel overflow errors!** Fixed all layout issues  
 - 📱 **App renamed to "Secure Wallet"** - cleaner branding
 - 🎯 **4-tab navigation** - Dashboard, SecureAI, Security, Settings
 - 📁 **File picker working!** Upload ANY file type
 - ✅ **Installs without errors!** Debug build works perfectly
 
-📖 [Full Installation Guide](#-download--install) | 🧪 [Testing Guide](FILE_PICKER_TEST_GUIDE.md)
+📖 [Full Installation Guide](#-download--install) | 🗺️ [Feature Roadmap](FEATURE_ROADMAP.md) | 🧪 [Testing Guide](FILE_PICKER_TEST_GUIDE.md)
 
 ---
 
@@ -431,14 +432,26 @@ https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-
 
 ## 🗺️ Roadmap
 
-- [ ] Biometric authentication (fingerprint, face ID)
-- [ ] Cloud backup with end-to-end encryption
-- [ ] File sharing with encrypted links
-- [ ] Multi-language support
-- [ ] Desktop support (Windows, macOS, Linux)
-- [ ] Hardware security key support
-- [ ] Audit logging export
-- [ ] Custom encryption algorithms selection
+**[View Full Feature Roadmap](FEATURE_ROADMAP.md)** - 30+ planned features across 12 phases!
+
+### Upcoming Features (v1.1.0 - Next Release)
+- [ ] 🔐 Biometric authentication (fingerprint, face ID)
+- [ ] 🔑 Two-Factor Authentication (2FA) with TOTP
+- [ ] 📁 File categories and smart tags
+- [ ] 👁️ File preview (PDF, images, videos)
+- [ ] 🔍 Advanced search and filters
+
+### Future Phases
+- [ ] ☁️ Cloud backup with end-to-end encryption (v1.3.0)
+- [ ] 🔗 Encrypted file sharing with links (v1.3.0)
+- [ ] 📝 Secure notes with rich text (v1.5.0)
+- [ ] 📄 Document scanner with OCR (v1.5.0)
+- [ ] 🌍 Multi-language support (v1.8.0)
+- [ ] 🖥️ Desktop support (Windows, macOS, Linux) (v2.0.0)
+- [ ] 🤖 Advanced AI features (file summarization, Q&A) (v2.1.0)
+- [ ] 🎮 Security gamification with achievements (v2.3.0)
+
+**Want to contribute?** Check out our [Feature Roadmap](FEATURE_ROADMAP.md) and pick a feature to implement!
 
 ## 📞 Support
 
