@@ -14,18 +14,20 @@ A military-grade encrypted personal information wallet built with Flutter. Prote
 
 👉 **[DOWNLOAD APK FOR ANDROID](https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-debug.apk)** 👈
 
-**Version**: 1.0.3 | **Size**: 146.4 MB | **Android**: 5.0+
+**Version**: 1.0.4 | **Size**: 146.4 MB | **Android**: 5.0+
 
-**✨ NEW in v1.0.3:**
-- 🤖 **SecureAI Chatbot!** Intelligent assistant powered by Google Gemini
-- 📋 **Feature Roadmap!** 30+ planned features for future releases
-- ✅ **No pixel overflow errors!** Fixed all layout issues  
-- 📱 **App renamed to "Secure Wallet"** - cleaner branding
-- 🎯 **4-tab navigation** - Dashboard, SecureAI, Security, Settings
-- 📁 **File picker working!** Upload ANY file type
-- ✅ **Installs without errors!** Debug build works perfectly
+**✨ NEW in v1.0.4:**
+- 🗄️ **SQLite Database!** Smart file management for Normal Security files
+- 📊 **Auto-categorization!** Files sorted into Documents, Photos, Videos, Audio, Others
+- ⭐ **Favorite Files!** Star your important files for quick access
+- 🕐 **Access Tracking!** See which files you access most
+- 📈 **File Statistics!** View storage usage and file analytics
+- 🔍 **Smart Search!** Find files by name, category, or tags
+- 🔒 **Enhanced Security!** SSS files NOT tracked in database for maximum privacy
+- 📱 **Cleaner UI!** Back to 3-tab navigation (Dashboard, Security, Settings)
+- ✅ **No pixel overflow errors!** Fixed all layout issues
 
-📖 [Full Installation Guide](#-download--install) | 🗺️ [Feature Roadmap](FEATURE_ROADMAP.md) | 🧪 [Testing Guide](FILE_PICKER_TEST_GUIDE.md)
+📖 [Full Installation Guide](#-download--install) | 🗺️ [Feature Roadmap](FEATURE_ROADMAP.md) | 🗄️ [Database Feature](DATABASE_FEATURE.md)
 
 ---
 
@@ -39,12 +41,19 @@ The app features a custom **Secure PII Wallet** logo designed for easy recogniti
 
 ## ✨ Features
 
-### 🤖 SecureAI Assistant (NEW!)
-- **Intelligent Chatbot**: Powered by Google Gemini AI
-- **Security Guidance**: Get help with encryption and privacy questions
-- **App Support**: Learn about features and best practices
-- **24/7 Available**: Always ready to assist you
-- **Beautiful Interface**: Modern chat UI with gradient design
+### 🗄️ Smart File Management (NEW in v1.0.4!)
+- **SQLite Database**: Metadata storage for Normal Security files
+- **Auto-categorization**: Files automatically sorted by type
+  - 📄 Documents (PDF, DOC, TXT, XLS, PPT)
+  - 🖼️ Photos (JPG, PNG, GIF, BMP, SVG)
+  - 🎥 Videos (MP4, AVI, MOV, MKV, WMV)
+  - 🎵 Audio (MP3, WAV, AAC, FLAC, M4A)
+  - 📁 Others (Everything else)
+- **Access Tracking**: See most/recently accessed files
+- **Favorite Files**: Star important files for quick access
+- **Smart Search**: Find files by name, category, or tags
+- **File Statistics**: View storage usage and analytics
+- **Privacy First**: SSS (High Security) files NOT tracked in database
 
 ### 🛡️ Dual Security System
 - **Master Password**: Strong password (10+ characters) for critical operations
@@ -433,6 +442,13 @@ https://github.com/kathirvel-p22/Secure-PII_Wallet/releases/latest/download/app-
 ## 🗺️ Roadmap
 
 **[View Full Feature Roadmap](FEATURE_ROADMAP.md)** - 30+ planned features across 12 phases!
+
+### Completed ✅
+- v1.0.4: SQLite Database + File Management (CURRENT)
+- v1.0.3: Feature Roadmap Document
+- v1.0.2: File Picker + Pixel Overflow Fixes
+- v1.0.1: Custom App Icon + Storage Permissions
+- v1.0.0: Initial Release with Encryption + SSS
 
 ### Upcoming Features (v1.1.0 - Next Release)
 - [ ] 🔐 Biometric authentication (fingerprint, face ID)
